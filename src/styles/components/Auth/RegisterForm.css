@@ -1,0 +1,22 @@
+.register__form{
+  margin: auto;
+  width: 300px;
+  height: 400px;
+  padding: 2rem;
+  border-radius: 10px;
+  background-color: rgb(224, 224, 224);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+
+}
+
+.register__form input{
+  height: 35px;
+  width: 200px;
+  border-radius: 5px;
+  border: none;  
+}
+
