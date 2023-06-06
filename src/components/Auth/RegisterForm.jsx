@@ -54,20 +54,20 @@ const RegisterForm = () => {
         />
       </div>
       <div className="field-container">
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={(e) => onChange(e)}
-        />
-      </div>
-      <div className="field-container">
         <label>lastname</label>
         <input
           type="text"
           name="lastname"
           value={lastname}
+          onChange={(e) => onChange(e)}
+        />
+      </div>
+      <div className="field-container">
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          value={email}
           onChange={(e) => onChange(e)}
         />
       </div>
