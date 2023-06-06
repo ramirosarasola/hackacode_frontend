@@ -1,10 +1,15 @@
 import React from 'react'
 import '../../styles/components/UI/Layout.css';
+import { Outlet } from 'react-router-dom';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
-const Layout = ({children}) => {
+const Layout = () => {
   return (
     <section id='layout'>
-      {children}
+      <Navbar/>
+      <Outlet/>
+      <Footer/>
     </section>
   )
 }

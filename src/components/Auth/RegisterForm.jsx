@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import "../../styles/components/Auth/RegisterForm.css";
 import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../slices/authSlice";
 
 const RegisterForm = () => {
-  const [user, setUser] = useState({
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  
+  const dispatch = useDispatch();
+
+  const [formData, setFormData] = useState({
     name: "",
     lastname: "",
     email: "",
@@ -11,89 +17,80 @@ const RegisterForm = () => {
     password2: "",
   });
 
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const dispatch = useDispatch();
+  const { name, email, password, password2, lastname } = formData;
 
-  const { name, lastname, email, password, password2 } = user;
-  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = (e) => {
-    const formData = new formData();
     e.preventDefault();
-    
     if (password !== password2) {
       console.log("Passwords do not match");
     } else {
       const newUser = {
         name: formData.name,
-        lastname: formData.lastname,
+        lastName: formData.lastname,
         email: formData.email,
-        password: formData.password,
+        password: formData.password
       };
       dispatch(registerUser(newUser));
       console.log(newUser);
     }
   };
 
+  // if(isAuthenticated){
+  //     return <Navigate to="/"/>;
+  // }
+
   return (
     <form action="" className="register__form" onSubmit={(e) => onSubmit(e)}>
-      <label htmlFor="">
-        Name
-      </label>
+      <div className="field-container">
+        <label>Name</label>
         <input
-          required
           type="text"
           name="name"
-          id="name"
           value={name}
           onChange={(e) => onChange(e)}
         />
-      <label htmlFor="">
-        Lastname
-      </label>
+      </div>
+      <div className="field-container">
+        <label>Email</label>
         <input
-          required
-          type="text"
-          name="lastname"
-          id="lastname"
-          value={lastname}
-          onChange={(e) => onChange(e)}
-        />
-      <label htmlFor="">
-        Email
-      </label>
-        <input
-          required
-          type="text"
+          type="email"
           name="email"
-          id="email"
           value={email}
           onChange={(e) => onChange(e)}
         />
-      <label htmlFor="">
-        Password
-      </label>
+      </div>
+      <div className="field-container">
+        <label>lastname</label>
         <input
-          required
+          type="text"
+          name="lastname"
+          value={lastname}
+          onChange={(e) => onChange(e)}
+        />
+      </div>
+      <div className="field-container">
+        <label>Password</label>
+        <input
           type="password"
           name="password"
-          id="password"
+          id=""
           value={password}
           onChange={(e) => onChange(e)}
         />
-      <label htmlFor="">
-        Repeat Password
-      </label>
+      </div>
+      <div className="field-container">
+        <label>Confirm Password</label>
         <input
-          required
           type="password"
           name="password2"
-          id="password2"
           value={password2}
           onChange={(e) => onChange(e)}
         />
-
-      <button type="submit">Registarse</button>
+      </div>
+      <button type="submit">Register</button>
     </form>
   );
 };
