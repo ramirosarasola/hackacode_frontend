@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../slices/authSlice';
 import { logo } from '../../assets';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { FiLogOut, FiUserPlus, FiSettings, FiMenu } from 'react-icons/fi';
 import '../../styles/components/UI/Navbar.css';
 
 const Navbar = () => {
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAvatarMenuOpen, setIsAvatarMenuOpen] = useState(false);
@@ -14,7 +17,10 @@ const Navbar = () => {
   const handleLogout = () => {
     console.log('Deslogueando');
     dispatch(logout());
+    return <Navigate to='/'/>
   };
+
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -26,6 +32,10 @@ const Navbar = () => {
 
   // Reemplaza con las iniciales del usuario
   const userInitials = 'AB';
+  
+  // if (!isAuthenticated) {
+  //   return <Navigate to='/'/>
+  // }
 
   return (
     <nav className={`navbar ${isMenuOpen ? 'menu-open' : ''}`}>
@@ -68,7 +78,7 @@ const Navbar = () => {
             <li>
               <Link onClick={handleLogout}>
                 <FiLogOut />
-                <span>Logout</span>
+                <span><button>Logout</button></span>
               </Link>
             </li>
           </ul>
