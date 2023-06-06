@@ -5,6 +5,7 @@ import { logo } from '../../assets';
 import { Link, Navigate } from 'react-router-dom';
 import { FiLogOut, FiUserPlus, FiSettings, FiMenu } from 'react-icons/fi';
 import '../../styles/components/UI/Navbar.css';
+import { uiActions } from '../../slices/uiSlice';
 
 const Navbar = () => {
 
@@ -23,7 +24,7 @@ const Navbar = () => {
 
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    dispatch(uiActions.toggle());
   };
 
   const toggleAvatarMenu = () => {
@@ -33,9 +34,6 @@ const Navbar = () => {
   // Reemplaza con las iniciales del usuario
   const userInitials = 'AB';
   
-  // if (!isAuthenticated) {
-  //   return <Navigate to='/'/>
-  // }
 
   return (
     <nav className={`navbar ${isMenuOpen ? 'menu-open' : ''}`}>
