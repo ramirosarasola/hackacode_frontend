@@ -15,16 +15,12 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           {/* Layout */}
-          {/* <Route path="/" element={<Layout />}>
-            <Route index element={<Navigate to="/home" />} />
-          </Route> */}
-
           {/* Pages */}
           {!isAuthenticated ? (
             <Route exact path="/" element={<Login />} />
           ) : (
             <Route path="/" element={<Layout />}>
-              <Route exact path="/home" element={<Home />} />
+              <Route exact path="/" element={<Home />} />
               <Route path="/register" element={<Register />} />
             </Route>
           )}
