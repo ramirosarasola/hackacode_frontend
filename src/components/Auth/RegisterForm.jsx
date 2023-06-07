@@ -38,10 +38,6 @@ const RegisterForm = () => {
     }
   };
 
-  // if(isAuthenticated){
-  //     return <Navigate to="/"/>;
-  // }
-
   return (
     <form action="" className="register__form" onSubmit={(e) => onSubmit(e)}>
       <div className="field-container">
@@ -54,7 +50,7 @@ const RegisterForm = () => {
         />
       </div>
       <div className="field-container">
-        <label>lastname</label>
+        <label>Lastname</label>
         <input
           type="text"
           name="lastname"

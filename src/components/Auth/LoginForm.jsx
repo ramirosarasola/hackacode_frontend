@@ -42,7 +42,6 @@ const LoginForm = () => {
         <input
           type="password"
           name="password"
-          id=""
           value={password}
           onChange={(e) => onChange(e)}
         />
