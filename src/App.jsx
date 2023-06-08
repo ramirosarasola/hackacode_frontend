@@ -8,8 +8,21 @@ import { loadUser } from "./slices/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const App = () => {
-  const isAuthenticated = useSelector((state)=> state.auth.isAuthenticated);
-    const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      dispatch(loadUser());
+    }
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <p>Loading</p>;
+  }
 
   return (
     <>
