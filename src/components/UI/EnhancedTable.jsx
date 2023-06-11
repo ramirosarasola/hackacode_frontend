@@ -241,7 +241,7 @@ export default function EnhancedTable({ employees }) {
 
   useEffect(() => {
     if (employees.length > 0) {
-      setRows(employees.map((item) => createData({ ...item })));
+      setRows(employees.map((item) => createData(item.name, item.lastName, item.user ,item._id, item.type)));
     }
   }, [employees]);
 
@@ -338,14 +338,7 @@ export default function EnhancedTable({ employees }) {
                           }}
                         />
                       </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
-                        {/* {row.name} */}
-                      </TableCell>
+                      <TableCell align="right">{row.name}</TableCell>
                       <TableCell align="right">{row.lastName}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">{row.employeeId}</TableCell>
