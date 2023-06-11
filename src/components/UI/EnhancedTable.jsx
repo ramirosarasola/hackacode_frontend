@@ -230,7 +230,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable({ employees }) {
+export default function EnhancedTable({ employees, users }) {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("name");
   const [selected, setSelected] = useState([]);
@@ -239,12 +239,25 @@ export default function EnhancedTable({ employees }) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
 
+
+
   useEffect(() => {
     if (employees.length > 0) {
-      setRows(employees.map((item) => createData(item.name, item.lastName, item.user ,item._id, item.type)));
+      setRows(
+        employees.map((item) =>
+          createData(
+            item.name,
+            item.lastName,
+            item.user,
+            item._id,
+            item.type,
+            item.sales
+          )
+        )
+      );
     }
-  }, [employees]);
-
+  }, [employees, users]);
+  
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -340,7 +353,7 @@ export default function EnhancedTable({ employees }) {
                       </TableCell>
                       <TableCell align="right">{row.name}</TableCell>
                       <TableCell align="right">{row.lastName}</TableCell>
-                      <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="right">{row.email || "-"}</TableCell>
                       <TableCell align="right">{row.employeeId}</TableCell>
                       <TableCell align="right">{row.role}</TableCell>
                       <TableCell align="right">{row.sales}</TableCell>
