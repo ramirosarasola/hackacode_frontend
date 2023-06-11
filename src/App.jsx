@@ -4,8 +4,11 @@ import Home from "./pages/Home";
 import Layout from "./components/UI/Layout";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Games from './pages/Games';
+import EmployeesData from "./pages/EmployeesData";
 import { loadUser } from "./slices/authSlice";
 import { useSelector, useDispatch } from "react-redux";
+import MaintenancePage from "./components/UI/MaintenancePage";
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -20,9 +23,10 @@ const App = () => {
     }
   }, [dispatch]);
 
-  if (isLoading) {
+  if (localStorage.getItem('token') && isLoading) {
     return <p>Loading</p>;
   }
+
 
   return (
     <>
@@ -35,11 +39,13 @@ const App = () => {
           ) : (
             <Route path="/" element={<Layout />}>
               <Route exact path="/" element={<Home />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/employees/new" element={<Register />} />
+              <Route path="/employees/data" element={<EmployeesData />} />
+              <Route path="/games" element={<Games />} />
             </Route>
           )}
           {/* Not Found */}
-          <Route path="*" element={<h1> Pagina no encontrada. </h1>} />
+          <Route path="*" element={<MaintenancePage></MaintenancePage>} />
         </Routes>
       </BrowserRouter>
     </>
