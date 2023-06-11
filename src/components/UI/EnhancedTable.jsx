@@ -37,13 +37,11 @@ function createData(name, lastName, email, employeeId, role, sales) {
 }
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
+  if (orderBy === "name") {
+    return b[orderBy].localeCompare(a[orderBy]);
+  } else {
+    return b[orderBy] - a[orderBy];
   }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
 }
 
 function getComparator(order, orderBy) {
@@ -239,44 +237,39 @@ export default function EnhancedTable({ employees, users }) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
 
-  console.log(employees)
-  console.log(users)
-
+  console.log(employees);
+  console.log(users);
 
   employees.map((item) => {
     console.log(item._id);
-    
-  })
+  });
 
   users.map((item) => {
     console.log(item._id);
-    const foundUser =  users.find((user) => user._id == '5d713995b721c3bb38c1f5d1')
+    const foundUser = users.find(
+      (user) => user._id == "5d713995b721c3bb38c1f5d1"
+    );
     console.log(foundUser);
-  })
-
-
+  });
 
   useEffect(() => {
     if (employees.length > 0 && users.length > 0) {
-      
-
       setRows(
         employees.map((item) => {
-          let foundUser = users.find((user) => user._id == item.user)
-          createData(
+          let foundUser = users.find((user) => user._id == item.user);
+          return createData(
             item.name,
             item.lastName,
             foundUser.email,
             item._id,
             item.type,
             item.sales
-          )
-        }
-        )
+          );
+        })
       );
     }
   }, [employees]);
-  
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -377,9 +370,15 @@ export default function EnhancedTable({ employees, users }) {
                       <TableCell align="right">{row.role}</TableCell>
                       <TableCell align="right">{row.sales}</TableCell>
                       <TableCell align="right">
-                        <EditIcon />
-                        <DeleteIcon />
-                        <VisibilityIcon />
+                        <button key={row._id} onClick={console.log(row._id)}>
+                          <EditIcon />
+                        </button>
+                        <button>
+                          <DeleteIcon />
+                        </button>
+                        <button>
+                          <VisibilityIcon />
+                        </button>
                       </TableCell>
                     </TableRow>
                   );
