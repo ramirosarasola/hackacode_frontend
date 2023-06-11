@@ -239,24 +239,43 @@ export default function EnhancedTable({ employees, users }) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
 
+  console.log(employees)
+  console.log(users)
+
+
+  employees.map((item) => {
+    console.log(item._id);
+    
+  })
+
+  users.map((item) => {
+    console.log(item._id);
+    const foundUser =  users.find((user) => user._id == '5d713995b721c3bb38c1f5d1')
+    console.log(foundUser);
+  })
+
 
 
   useEffect(() => {
-    if (employees.length > 0) {
+    if (employees.length > 0 && users.length > 0) {
+      
+
       setRows(
-        employees.map((item) =>
+        employees.map((item) => {
+          let foundUser = users.find((user) => user._id == item.user)
           createData(
             item.name,
             item.lastName,
-            item.user,
+            foundUser.email,
             item._id,
             item.type,
             item.sales
           )
+        }
         )
       );
     }
-  }, [employees, users]);
+  }, [employees]);
   
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -353,7 +372,7 @@ export default function EnhancedTable({ employees, users }) {
                       </TableCell>
                       <TableCell align="right">{row.name}</TableCell>
                       <TableCell align="right">{row.lastName}</TableCell>
-                      <TableCell align="right">{row.email || "-"}</TableCell>
+                      <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">{row.employeeId}</TableCell>
                       <TableCell align="right">{row.role}</TableCell>
                       <TableCell align="right">{row.sales}</TableCell>
