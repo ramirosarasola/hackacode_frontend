@@ -35,7 +35,7 @@ const Sidebar = () => {
   };
 
   return (
-    <section className="sidebar__menu"  anchor="left" open={true} style={{ width: 250, position:'absolute'}}>
+    <section className="sidebar__menu"  anchor="left" open={true} style={{ width: 250, position:'relative'}}>
       <Box sx={{ width: 250, height: "100vh", backgroundColor: "secondary.main" }}>
         <Box sx={{ padding: "20px" }}>
           <h4 style={{ color: "#ffff"}}>Menu</h4>

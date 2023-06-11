@@ -1,9 +1,9 @@
 .employess__data{
-  width: 80vw;
+  width: 100%;
   height: calc(100vh - 90px);
-  margin-left: 20vw;
-  display: flex;
+  margin-left:250px ;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
 }
