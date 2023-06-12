@@ -45,7 +45,7 @@ const Sidebar = () => {
                 <ListItemIcon>
                   <DashboardIcon />
                 </ListItemIcon>
-                <ListItemText disableTypography >Control Panel</ListItemText>
+                <ListItemText disableTypography >Admin Panel</ListItemText>
               </ListItemButton>
             </Link>
             <ListItemButton onClick={() => handleClick("employees")}>
