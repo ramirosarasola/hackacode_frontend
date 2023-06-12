@@ -1,0 +1,29 @@
+.card-container{
+    width: 400px;
+    background-color: #4635AD;
+    height: 200px;
+    border-radius: 20px;
+    padding: 15px;
+    margin: 20px;
+}
+
+.card-heading{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-heading .icon,
+.card-heading h2{
+    color: white;
+}
+
+.card-heading .icon{
+    width: 40px;
+    height: 40px;
+}
+
+.subheading{
+    color: white;
+    font-size: 14px;
+}

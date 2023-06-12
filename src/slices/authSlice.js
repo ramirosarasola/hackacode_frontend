@@ -68,8 +68,7 @@ export const loginUser = createAsyncThunk(
         config
       );
       localStorage.setItem('token', data.token);
-      const { token } = res.data;
-      setAuthToken(token);
+
       // I set the token before the loadUser method executes.
       dispatch(loadUser(data));
       return data;

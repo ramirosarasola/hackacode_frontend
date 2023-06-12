@@ -1,11 +1,11 @@
 import React from "react";
-import Sidebar from '../components/UI/Sidebar';
+import CardsContainer from "../components/UI/CardsContainer";
+
 
 const Home = () => {
   return (
-    <div>
-      
-      <input type="text" />
+    <div style={{width: "85vw", height: "100vh"}}>
+      <CardsContainer />     
 
     </div>
   );
