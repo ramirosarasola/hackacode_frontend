@@ -370,7 +370,7 @@ export default function EnhancedTable({ employees, users }) {
                       <TableCell align="right">{row.role}</TableCell>
                       <TableCell align="right">{row.sales}</TableCell>
                       <TableCell align="right">
-                        <button key={row._id} onClick={console.log(row._id)}>
+                        <button key={row._id} onClick={console.log(row.employeeId)}>
                           <EditIcon />
                         </button>
                         <button>
