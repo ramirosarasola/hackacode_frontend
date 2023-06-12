@@ -25,14 +25,13 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { visuallyHidden } from "@mui/utils";
 import "../../styles/components/UI/EnhancedTable.css";
 
-function createData(name, lastName, email, employeeId, role, sales) {
+function createData(name, lastName, email, employeeId, role) {
   return {
     name,
     lastName,
     email,
     employeeId,
-    role,
-    sales,
+    role
   };
 }
 
@@ -94,12 +93,6 @@ const headCells = [
     label: "Role",
   },
   {
-    id: "sales",
-    numeric: true,
-    disablePadding: false,
-    label: "Sales",
-  },
-  {
     id: "actions",
     numeric: true,
     disablePadding: false,
@@ -137,7 +130,7 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            align={headCell.numeric ? "left" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -262,8 +255,7 @@ export default function EnhancedTable({ employees, users }) {
             item.lastName,
             foundUser.email,
             item._id,
-            item.type,
-            item.sales
+            item.type    
           );
         })
       );
@@ -321,7 +313,7 @@ export default function EnhancedTable({ employees, users }) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+      <Paper sx={{ width: "100%", mb: 2, backgroundColor:'secondary.main' }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
@@ -363,20 +355,19 @@ export default function EnhancedTable({ employees, users }) {
                           }}
                         />
                       </TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">{row.lastName}</TableCell>
-                      <TableCell align="right">{row.email}</TableCell>
-                      <TableCell align="right">{row.employeeId}</TableCell>
-                      <TableCell align="right">{row.role}</TableCell>
-                      <TableCell align="right">{row.sales}</TableCell>
-                      <TableCell align="right">
-                        <button key={row._id} onClick={console.log(row.employeeId)}>
+                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left">{row.lastName}</TableCell>
+                      <TableCell align="left">{row.email}</TableCell>
+                      <TableCell align="left">{row.employeeId}</TableCell>
+                      <TableCell align="left">{row.role}</TableCell>
+                      <TableCell align="left">
+                        <button className="action-btn" style={{backgroundColor: 'lightblue', color: 'white', border: 'none' }} key={row._id} onClick={console.log(row.employeeId)}>
                           <EditIcon />
                         </button>
-                        <button>
+                        <button className="action-btn" style={{backgroundColor: 'red', color: 'white', border: 'none' }}>
                           <DeleteIcon />
                         </button>
-                        <button>
+                        <button className="action-btn"  style={{backgroundColor: 'green', color: 'white', border: 'none' }}>
                           <VisibilityIcon />
                         </button>
                       </TableCell>
@@ -416,8 +407,7 @@ EnhancedTable.propTypes = {
       lastName: PropTypes.string.isRequired,
       email: PropTypes.string,
       employeeId: PropTypes.string,
-      role: PropTypes.string,
-      sales: PropTypes.number,
+      role: PropTypes.string
     })
   ).isRequired,
 };

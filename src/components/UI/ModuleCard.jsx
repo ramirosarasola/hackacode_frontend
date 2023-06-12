@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 
-function ModuleCard({ title, subheading, icon: IconComponent }) {
+function ModuleCard({ title, subheading, icon: IconComponent, url }) {
   return (
     <div className='card-container'>
         <div className="card-content">
@@ -15,7 +15,7 @@ function ModuleCard({ title, subheading, icon: IconComponent }) {
           <p className='subheading'>{subheading}</p>
         </div>
         <div className="card-footer">
-          <Link className='link'>New {title.toLowerCase()} <AddCircleIcon/></Link>
+          <Link to={url} className='link'>New {title.toLowerCase()} <AddCircleIcon/></Link>
         </div>
     </div>
   )
