@@ -1,13 +1,13 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import setAuthToken from "../utils/setAuthToken";
+import setAuthToken from '../utils/setAuthToken';
 
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: false,
   isLoading: true,
-  user: null
-}
+  user: null,
+};
 
 export const loadUser = createAsyncThunk(
   'auth/loadUser',
@@ -26,7 +26,6 @@ export const loadUser = createAsyncThunk(
     }
   }
 );
-
 
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
@@ -51,7 +50,6 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-
 export const loginUser = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { dispatch, rejectWithValue }) => {
@@ -64,10 +62,14 @@ export const loginUser = createAsyncThunk(
     };
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/login', body, config);
+      const { data } = await axios.post(
+        'http://localhost:5000/api/auth/login',
+        body,
+        config
+      );
       localStorage.setItem('token', data.token);
-      // const { token } = res.data;
-      // setAuthToken(token);
+      const { token } = res.data;
+      setAuthToken(token);
       // I set the token before the loadUser method executes.
       dispatch(loadUser(data));
       return data;
@@ -86,13 +88,13 @@ export const authSlice = createSlice({
       localStorage.removeItem('token');
       state.isAuthenticated = false;
       state.user = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(loadUser.pending, (state) => {
         state.isLoading = true;
-        // state.isAuthenticated = (state.token ? true : false);
+        state.isAuthenticated = state.token ? true : false;
       })
       .addCase(loadUser.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -131,8 +133,8 @@ export const authSlice = createSlice({
         state.isAuthenticated = false;
         state.isLoading = false;
         state.user = null;
-      })
-  }
+      });
+  },
 });
 
 export const { logout } = authSlice.actions;
