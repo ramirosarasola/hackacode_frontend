@@ -24,6 +24,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { visuallyHidden } from "@mui/utils";
 import "../../styles/components/UI/EnhancedTable.css";
+import { useNavigate } from "react-router-dom";
 
 function createData(name, lastName, email, employeeId, role) {
   return {
@@ -31,7 +32,7 @@ function createData(name, lastName, email, employeeId, role) {
     lastName,
     email,
     employeeId,
-    role
+    role,
   };
 }
 
@@ -230,19 +231,26 @@ export default function EnhancedTable({ employees, users }) {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
 
-  console.log(employees);
-  console.log(users);
+  const navigate = useNavigate();
+  //Function to edit employees
 
-  employees.map((item) => {
-    console.log(item._id);
-  });
+  const handleEdit = (id) => {
+    navigate("/employees/edit/" + id);
+  };
+
+  // console.log(employees);
+  // console.log(users);
+
+  // employees.map((item) => {
+  //   console.log(item._id);
+  // });
 
   users.map((item) => {
-    console.log(item._id);
+    // console.log(item._id);
     const foundUser = users.find(
       (user) => user._id == "5d713995b721c3bb38c1f5d1"
     );
-    console.log(foundUser);
+    // console.log(foundUser);
   });
 
   useEffect(() => {
@@ -255,7 +263,7 @@ export default function EnhancedTable({ employees, users }) {
             item.lastName,
             foundUser.email,
             item._id,
-            item.type    
+            item.type
           );
         })
       );
@@ -313,7 +321,7 @@ export default function EnhancedTable({ employees, users }) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2, backgroundColor:'secondary.main' }}>
+      <Paper sx={{ width: "100%", mb: 2, backgroundColor: "secondary.main" }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
@@ -361,13 +369,38 @@ export default function EnhancedTable({ employees, users }) {
                       <TableCell align="left">{row.employeeId}</TableCell>
                       <TableCell align="left">{row.role}</TableCell>
                       <TableCell align="left">
-                        <button className="action-btn" style={{backgroundColor: 'lightblue', color: 'white', border: 'none' }} key={row._id} onClick={console.log(row.employeeId)}>
+                        <button
+                          className="action-btn"
+                          style={{
+                            backgroundColor: "lightblue",
+                            color: "white",
+                            border: "none",
+                          }}
+                          onClick={() => {
+                            // console.log(row.employeeId);
+                            handleEdit(row.employeeId);
+                          }}
+                        >
                           <EditIcon />
                         </button>
-                        <button className="action-btn" style={{backgroundColor: 'red', color: 'white', border: 'none' }}>
+                        <button
+                          className="action-btn"
+                          style={{
+                            backgroundColor: "red",
+                            color: "white",
+                            border: "none",
+                          }}
+                        >
                           <DeleteIcon />
                         </button>
-                        <button className="action-btn"  style={{backgroundColor: 'green', color: 'white', border: 'none' }}>
+                        <button
+                          className="action-btn"
+                          style={{
+                            backgroundColor: "green",
+                            color: "white",
+                            border: "none",
+                          }}
+                        >
                           <VisibilityIcon />
                         </button>
                       </TableCell>
@@ -407,7 +440,7 @@ EnhancedTable.propTypes = {
       lastName: PropTypes.string.isRequired,
       email: PropTypes.string,
       employeeId: PropTypes.string,
-      role: PropTypes.string
+      role: PropTypes.string,
     })
   ).isRequired,
 };

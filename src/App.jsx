@@ -9,6 +9,7 @@ import EmployeesData from "./pages/EmployeesData";
 import { loadUser } from "./slices/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import MaintenancePage from "./components/UI/MaintenancePage";
+import EditEmployee from "./components/UI/EditEmployee";
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -41,6 +42,7 @@ const App = () => {
               <Route exact path="/" element={<Home />} />
               <Route path="/employees/new" element={<Register />} />
               <Route path="/employees/data" element={<EmployeesData />} />
+              <Route path="/employees/edit/:id" element={<EditEmployee />} />
               <Route path="/games" element={<Games />} />
             </Route>
           )}

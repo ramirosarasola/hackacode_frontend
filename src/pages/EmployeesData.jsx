@@ -9,7 +9,7 @@ const EmployeesData = () => {
   const dispatch = useDispatch();
   const { employees, loading, error } = useSelector(state => state.employees);
   const { users } = useSelector(state => state.users);
-  console.log(users);
+  // console.log(users);
 
   useEffect(() => {
     dispatch(fetchEmployees());

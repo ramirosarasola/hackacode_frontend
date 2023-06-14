@@ -11,8 +11,20 @@ export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/users');
+      const response = await axios.get('http://localhost:5000/api/users');
       // console.log(response.data);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  'users/updateUser',
+  async ({ _id, userData }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`http://localhost:5000/api/users/${_id}`, userData);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

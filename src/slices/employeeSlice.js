@@ -20,6 +20,20 @@ export const fetchEmployees = createAsyncThunk(
   }
 );
 
+export const getEmployee = createAsyncThunk(
+  'employees/getEmployee',
+  async ({id}, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/employees/${id}`);
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+
 export const updateEmployee = createAsyncThunk(
   'employees/updateEmployee',
   async ({ id, employeeData }, { rejectWithValue }) => {
