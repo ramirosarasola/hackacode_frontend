@@ -1,3 +1,20 @@
 .sidebar__menu{
   width: 15vw;
 }
+
+.logout{
+  font-size: 16px;
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+
+  display: flex;
+  justify-content: space-between;
+  /* width: 80%; */
+  margin-bottom: 2rem;
+  gap: 1rem;
+  background-color: transparent;
+  border: none;
+  align-items: center;
+  cursor: pointer;
+}
