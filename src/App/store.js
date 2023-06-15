@@ -3,6 +3,7 @@ import { authSlice } from '../slices/authSlice';
 import { uiSlice } from '../slices/uiSlice';
 import { employeeSlice } from '../slices/employeeSlice';
 import { userSlice } from '../slices/userSlice';
+import { gameSlice } from '../slices/gameSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     ui: uiSlice.reducer,
     employees: employeeSlice.reducer,
     users: userSlice.reducer,
+    games: gameSlice.reducer,
   },
 });

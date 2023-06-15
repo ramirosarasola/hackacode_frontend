@@ -104,7 +104,7 @@ const Sidebar = () => {
                     <ListItemText disableTypography primary="New Game" />
                   </ListItemButton>
                 </Link>
-                <Link to="/games/data" style={{ color: "#ffff", textDecoration: "none" }}>
+                <Link to="/games" style={{ color: "#ffff", textDecoration: "none" }}>
                   <ListItemButton sx={{ pl: 4 }}>
                     <ListItemText disableTypography primary="Data Games" />
                   </ListItemButton>

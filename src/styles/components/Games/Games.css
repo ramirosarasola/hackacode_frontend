@@ -1,0 +1,6 @@
+.games-container{
+    display: flex;
+    padding: 50px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}

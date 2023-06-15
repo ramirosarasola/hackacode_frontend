@@ -32,7 +32,7 @@ const modules = [
     title: 'Games',
     subheading: 'See all Games',
     icon: AttractionsIcon,
-    url: ''
+    url: '/games'
   },
   {
     title: 'Sales',

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../../styles/components/Auth/RegisterForm.css";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../slices/authSlice";
+import FormGroup from "../UI/FormGroup";
+
 
 const RegisterForm = () => {
 
@@ -22,6 +24,49 @@ const RegisterForm = () => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  const formFields = [
+    {
+      name: "name",
+      type: "text",
+      placeholder: "Name",
+      label: "Name",
+      value: formData.name,
+      onChange: onChange
+    },
+    {
+      name: "lastname",
+      type: "text",
+      placeholder: "Last Name",
+      label: "Last Name",
+      value: formData.lastName,
+      onChange: onChange
+    },
+    {
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      label: "Email",
+      value: formData.email,
+      onChange: onChange
+    },
+    {
+      name: "password",
+      type: "password",
+      placeholder: "Password",
+      label: "Password",
+      value: formData.password,
+      onChange: onChange
+    },
+    {
+      name: "password2",
+      type: "password",
+      placeholder: "Confirm Password",
+      label: "Confirm Password",
+      value: formData.password2,
+      onChange: onChange
+    }
+  ]
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
@@ -39,53 +84,10 @@ const RegisterForm = () => {
   };
 
   return (
-    <form action="" className="register__form" onSubmit={(e) => onSubmit(e)}>
-      <div className="field-container">
-        <label>Name</label>
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={(e) => onChange(e)}
-        />
-      </div>
-      <div className="field-container">
-        <label>Lastname</label>
-        <input
-          type="text"
-          name="lastname"
-          value={lastname}
-          onChange={(e) => onChange(e)}
-        />
-      </div>
-      <div className="field-container">
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={(e) => onChange(e)}
-        />
-      </div>
-      <div className="field-container">
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          id=""
-          value={password}
-          onChange={(e) => onChange(e)}
-        />
-      </div>
-      <div className="field-container">
-        <label>Confirm Password</label>
-        <input
-          type="password"
-          name="password2"
-          value={password2}
-          onChange={(e) => onChange(e)}
-        />
-      </div>
+    <form action="" className="form_container" onSubmit={(e) => onSubmit(e)}>
+      {formFields.map((field) => (
+        <FormGroup key={field.name} {...field} />
+      ))}
       <button type="submit">Register</button>
     </form>
   );

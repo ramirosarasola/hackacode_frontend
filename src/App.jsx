@@ -9,7 +9,8 @@ import EmployeesData from "./pages/EmployeesData";
 import { loadUser } from "./slices/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import MaintenancePage from "./components/UI/MaintenancePage";
-import EditEmployee from "./components/UI/EditEmployee";
+import EditEmployee from "./components/Employees/EditEmployee";
+import GameForm from "./components/Games/GameForm";
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -43,6 +44,7 @@ const App = () => {
               <Route path="/employees/new" element={<Register />} />
               <Route path="/employees/data" element={<EmployeesData />} />
               <Route path="/employees/edit/:id" element={<EditEmployee />} />
+              <Route path="/games/new" element={<GameForm />} />
               <Route path="/games" element={<Games />} />
             </Route>
           )}

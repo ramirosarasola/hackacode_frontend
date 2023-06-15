@@ -1,4 +1,4 @@
-.register__form{
+.form_container{
   max-width: 400px;
   background-color: #fff;
   border-radius: 5px;
@@ -9,7 +9,7 @@
 
 /*falta estilar los elementos dentro del formulario */
 
-.register__form input{
+.form_container input{
   width: 100%;
   height: 40px;
   border: 1px solid #ccc;
@@ -20,7 +20,7 @@
 
 /*por ultimo estilar el boton de color azul*/
 
-.register__form button{
+.form_container button{
   width: 100%;
   height: 40px;
   border: 1px solid #ccc;

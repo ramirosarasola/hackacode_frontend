@@ -238,21 +238,6 @@ export default function EnhancedTable({ employees, users }) {
     navigate("/employees/edit/" + id);
   };
 
-  // console.log(employees);
-  // console.log(users);
-
-  // employees.map((item) => {
-  //   console.log(item._id);
-  // });
-
-  users.map((item) => {
-    // console.log(item._id);
-    const foundUser = users.find(
-      (user) => user._id == "5d713995b721c3bb38c1f5d1"
-    );
-    // console.log(foundUser);
-  });
-
   useEffect(() => {
     if (employees.length > 0 && users.length > 0) {
       setRows(
@@ -376,11 +361,7 @@ export default function EnhancedTable({ employees, users }) {
                             color: "white",
                             border: "none",
                           }}
-                          onClick={() => {
-                            // console.log(row.employeeId);
-                            handleEdit(row.employeeId);
-                          }}
-                        >
+                          onClick={() => {handleEdit(row.employeeId);}}>
                           <EditIcon />
                         </button>
                         <button
