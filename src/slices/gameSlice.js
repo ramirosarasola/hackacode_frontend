@@ -6,8 +6,31 @@ const initialState = {
   isLoading: false,
 };
 
+export const createGame = createAsyncThunk(
+  'games/createGame',
+  async (gameFormData, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+
+      const response = await axios.post(
+        'http://localhost:5000/api/games/register',
+        gameFormData,
+        config
+      );
+
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const getGames = createAsyncThunk(
-  'users/getGames',
+  'games/getGames',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get('http://localhost:5000/api/games');
@@ -35,10 +58,21 @@ export const gameSlice = createSlice({
       .addCase(getGames.rejected, (state) => {
         state.isLoading = false;
         state.games = [];
+      })
+      .addCase(createGame.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createGame.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.games.push(action.payload);
+      })
+      .addCase(createGame.rejected, (state) => {
+        state.isLoading = false;
+        state.games = [];
       });
   },
 });
 
-export const {} = gameSlice.actions;
+export const { actios } = gameSlice.actions;
 
 export default gameSlice.reducer;

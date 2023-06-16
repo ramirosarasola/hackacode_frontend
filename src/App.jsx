@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Layout from "./components/UI/Layout";
 import Register from "./pages/Register";
@@ -27,6 +27,10 @@ const App = () => {
 
   if (localStorage.getItem('token') && isLoading) {
     return <p>Loading</p>;
+  }
+
+  if(!isAuthenticated){
+    <Navigate to="/"/>
   }
 
 

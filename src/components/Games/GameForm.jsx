@@ -1,22 +1,71 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FormGroup from '../UI/FormGroup'
 import '../../styles/components/Auth/RegisterForm.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { createGame } from '../../slices/gameSlice';
+import { fetchEmployees } from '../../slices/employeeSlice';
 
 function GameForm() {
 
+  const { employees: employeesList } = useSelector((state) => state.employees);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchEmployees());
+  }, [dispatch]);
+
     const [formData, setFormData] = useState({
         name: "",
-        lastname: "",
-        email: "",
-        password: "",
-        password2: "",
+        description: "",
+        employees: [],
+        hours: [
+          {
+            opening: "",
+            closing: ""
+          }
+        ],
+        photo:null
       });
     
-      const { name, email, password, password2, lastname } = formData;
+      const { name, description,  hours, employees, photo } = formData;
     
-      const onChange = (e) =>
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+      const onChange = (e) => {
+        if (e.target.name === 'opening' || e.target.name === 'closing') {
+          setFormData({
+            ...formData,
+            hours: [
+              {
+                ...hours[0],
+                [e.target.name]: e.target.value,
+              },
+            ],
+          });
+        } else if (e.target.name === 'employees') {
+          const selectedOptions = Array.from(e.target.options)
+            .filter((option) => option.selected)
+            .map((option) => option.value);
+          setFormData({ ...formData, [e.target.name]: selectedOptions });
+        } else if (e.target.name === 'photo') {
+          setFormData({ ...formData, photo: e.target.files[0] }); // Update this line
+        } else {
+          setFormData({ ...formData, [e.target.name]: e.target.value });
+        }
+      };
+      
 
+      const onSubmit = e => {
+        e.preventDefault();
+      
+        const form = new FormData();
+        form.append('name', name);
+        form.append('description', description);
+        form.append('employees', JSON.stringify(employees));
+        form.append('hours', JSON.stringify(hours));
+        form.append('photo', photo);
+      
+        dispatch(createGame(form));
+      };
+      
 
     const formFields = [
         {
@@ -24,44 +73,65 @@ function GameForm() {
           type: "text",
           placeholder: "Name",
           label: "Name",
-          value: formData.description
+          value: name,
+          onChange: onChange
         },
         {
           name: "description",
           type: "text",
           placeholder: "Description",
           label: "Description",
-          value: formData.description,
+          value: description,
+          onChange: onChange
         },
         {
             name: "photo",
             type: "file",
             placeholder: "Game Photo",
             label: "Game Photo",
-            value: formData.photo,
-           },
-        {
-         name: "hours",
-         type: "date",
-         placeholder: "Hours",
-         label: "Hours",
-         value: formData.hours,
+            onChange: onChange
         },
         {
-         name: "employees",
-         type: "select",
-         placeholder: "Employees",
-         label: "Employees",
-         value: formData.employees,
+         name: "opening",
+         type: "datetime-local",
+         placeholder: "Opening Hour",
+         label: "Opening Hour",
+         value: hours[0].opening,
+         onChange: onChange
         },
-
+        {
+          name: "closing",
+          type: "datetime-local",
+          placeholder: "Closing Hour",
+          label: "Closing Hour",
+          value: hours[0].closing,
+          onChange: onChange
+         },
+         {
+          name: "employees",
+          type: "select",
+          placeholder: "Employees",
+          label: "Employees",
+          value: employees,
+          options: employeesList.filter(employee => employee.type === 'manager').map((employee) => ({
+            value: employee._id,
+            label: `${employee.name} ${employee.lastName}`,
+          })),
+          multiple: true,
+          onChange: onChange
+        },
       ]
-    
+      
+      /* console.log(formData) */
+      
   return (
-    <div className='form_container'>
-        {formFields.map((field) => (
-            <FormGroup key={field.name} {...field} />
-        ))}
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100%'}}>
+      <form className='form_container' onSubmit={onSubmit} encType='multipart/form-data' >
+          {formFields.map((field) => (
+              <FormGroup key={field.name} {...field} multiple={field.multiple} />
+          ))}
+          <button type="submit">Register</button>
+      </form>
     </div>
   )
 }
