@@ -49,10 +49,10 @@ const Sidebar = () => {
       className="sidebar__menu"
       anchor="left"
       open={true}
-      style={{ width: 250, position: "relative" }}
+      style={{marginRight: 250}}
     >
       <Box
-        sx={{ width: 250, height: "100vh", backgroundColor: "secondary.main" }}
+        sx={{ width: 250, height: "100vh", backgroundColor: "secondary.main" ,position: "fixed" }}
       >
         <Box sx={{ padding: "20px" }}>
           <h4 style={{ color: "#ffff" }}>Menu</h4>

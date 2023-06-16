@@ -1,6 +1,8 @@
 .sidebar__menu{
-  width: 15vw;
+  height: 100vh;
 }
+
+
 
 .logout{
   font-size: 16px;
