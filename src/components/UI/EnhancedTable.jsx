@@ -25,6 +25,11 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { visuallyHidden } from "@mui/utils";
 import "../../styles/components/UI/EnhancedTable.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteEmployee } from "../../slices/employeeSlice";
+import { deleteUser } from "../../slices/userSlice";
+import { ConfirmAlert } from "./alert";
+import { useSelector } from "react-redux";
 
 function createData(name, lastName, email, employeeId, role) {
   return {
@@ -102,6 +107,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
+  const { user } = useSelector(state => state.auth);
   const {
     onSelectAllClick,
     order,
@@ -129,7 +135,9 @@ function EnhancedTableHead(props) {
           />
         </TableCell>
         {headCells.map((headCell) => (
+          
           <TableCell
+            style={user.role !== 'admin' && headCell.id === 'actions' ? { display: "none" } : {}}
             key={headCell.id}
             align={headCell.numeric ? "left" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
@@ -223,6 +231,8 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function EnhancedTable({ employees, users }) {
+  const { user } = useSelector((state) => state.auth);
+  // console.log(user);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("name");
   const [selected, setSelected] = useState([]);
@@ -232,10 +242,32 @@ export default function EnhancedTable({ employees, users }) {
   const [rows, setRows] = useState([]);
 
   const navigate = useNavigate();
-  //Function to edit employees
+  const dispatch = useDispatch();
 
+  //Function to edit employees
   const handleEdit = (id) => {
     navigate("/employees/edit/" + id);
+  };
+
+  const handleDelete = (id) => {
+    console.info("selected id: " + id);
+    const employee = employees.filter((employee) => employee._id == id);
+    console.info(employee);
+    console.warn("are you sure?");
+    let user_id = employee[0].user;
+    console.log(user_id);
+
+    ConfirmAlert().then((result) => {
+
+      if (employee && result) {
+        dispatch(deleteUser(user_id))
+        console.info("user deleted....");
+        dispatch(deleteEmployee(id))
+        console.log("employee deleted...");
+      } else {
+        console.log("deletion canceled...");
+      }
+    });
   };
 
   useEffect(() => {
@@ -353,6 +385,9 @@ export default function EnhancedTable({ employees, users }) {
                       <TableCell align="left">{row.email}</TableCell>
                       <TableCell align="left">{row.employeeId}</TableCell>
                       <TableCell align="left">{row.role}</TableCell>
+                      {user.role == 'admin'
+                      
+                        &&
                       <TableCell align="left">
                         <button
                           className="action-btn"
@@ -361,7 +396,10 @@ export default function EnhancedTable({ employees, users }) {
                             color: "white",
                             border: "none",
                           }}
-                          onClick={() => {handleEdit(row.employeeId);}}>
+                          onClick={() => {
+                            handleEdit(row.employeeId);
+                          }}
+                        >
                           <EditIcon />
                         </button>
                         <button
@@ -370,6 +408,9 @@ export default function EnhancedTable({ employees, users }) {
                             backgroundColor: "red",
                             color: "white",
                             border: "none",
+                          }}
+                          onClick={() => {
+                            handleDelete(row.employeeId);
                           }}
                         >
                           <DeleteIcon />
@@ -385,6 +426,7 @@ export default function EnhancedTable({ employees, users }) {
                           <VisibilityIcon />
                         </button>
                       </TableCell>
+                      }
                     </TableRow>
                   );
                 })}

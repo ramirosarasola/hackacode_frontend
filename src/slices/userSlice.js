@@ -32,6 +32,18 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+export const deleteUser = createAsyncThunk(
+  'users/deleteUser',
+  async (user_id, { rejectWithValue }) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/users/${user_id}`);
+      return user_id;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: 'users',
   initialState,
