@@ -9,7 +9,8 @@
 
 /*falta estilar los elementos dentro del formulario */
 
-.form_container input{
+.form_container input,
+.form_container select{
   width: 100%;
   height: 40px;
   border: 1px solid #ccc;
