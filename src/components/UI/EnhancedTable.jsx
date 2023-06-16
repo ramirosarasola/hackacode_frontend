@@ -108,6 +108,7 @@ const headCells = [
 
 function EnhancedTableHead(props) {
   const { user } = useSelector(state => state.auth);
+  console.log(user);
   const {
     onSelectAllClick,
     order,
@@ -137,7 +138,7 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           
           <TableCell
-            style={user.role !== 'admin' && headCell.id === 'actions' ? { display: "none" } : {}}
+            style={user.data && user.data.role !== 'admin' && headCell.id === 'actions' ? { display: "none" } : {}}
             key={headCell.id}
             align={headCell.numeric ? "left" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
@@ -232,7 +233,7 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable({ employees, users }) {
   const { user } = useSelector((state) => state.auth);
-  // console.log(user);
+  console.log(user);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("name");
   const [selected, setSelected] = useState([]);
@@ -385,7 +386,7 @@ export default function EnhancedTable({ employees, users }) {
                       <TableCell align="left">{row.email}</TableCell>
                       <TableCell align="left">{row.employeeId}</TableCell>
                       <TableCell align="left">{row.role}</TableCell>
-                      {user.role == 'admin'
+                      {(user.data.role && user.data.role == 'admin')
                       
                         &&
                       <TableCell align="left">
