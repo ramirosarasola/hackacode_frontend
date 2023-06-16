@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react'
 import FormGroup from '../UI/FormGroup'
 import '../../styles/components/Auth/RegisterForm.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { createGame } from '../../slices/gameSlice';
+import { createGame, uploadPhoto } from '../../slices/gameSlice';
 import { fetchEmployees } from '../../slices/employeeSlice';
+
 
 function GameForm() {
 
   const { employees: employeesList } = useSelector((state) => state.employees);
   const dispatch = useDispatch();
-
+  const [games, setGames] = useState([]);
   useEffect(() => {
     dispatch(fetchEmployees());
   }, [dispatch]);
@@ -53,18 +54,25 @@ function GameForm() {
       };
       
 
-      const onSubmit = e => {
+      const onSubmit = async (e) => {
         e.preventDefault();
+        console.log('Form submitted', formData)
+        try {
+          const gameData = {
+            name,
+            description,
+            hours,
+            employees
+          };
       
-        const form = new FormData();
-        form.append('name', name);
-        form.append('description', description);
-        form.append('employees', JSON.stringify(employees));
-        form.append('hours', JSON.stringify(hours));
-        form.append('photo', photo);
-      
-        dispatch(createGame(form));
+          const createdGame = await dispatch(createGame(gameData)).unwrap();
+          setGames([...games, createdGame]);
+          await dispatch(uploadPhoto({ id: createdGame._id, file: photo })).unwrap();
+        } catch (error) {
+          console.log(error);
+        }
       };
+      
       
 
     const formFields = [
@@ -126,11 +134,11 @@ function GameForm() {
       
   return (
     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100%'}}>
-      <form className='form_container' onSubmit={onSubmit} encType='multipart/form-data' >
-          {formFields.map((field) => (
-              <FormGroup key={field.name} {...field} multiple={field.multiple} />
-          ))}
-          <button type="submit">Register</button>
+      <form className='form_container' onSubmit={onSubmit} encType='multipart/form-data'>
+        {formFields.map((field) => (
+          <FormGroup key={field.name} {...field} multiple={field.multiple} />
+        ))}
+        <button type="submit">Register</button>
       </form>
     </div>
   )
