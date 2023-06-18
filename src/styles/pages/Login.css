@@ -9,8 +9,13 @@
 
 .login h2 {
   margin-top: 3rem;
-  color: black;
+  color: #fff;
   z-index: 2;
+  font-size: 2rem;
+}
+
+.login span{
+  color: #2196f3;
 }
 
 .bg-image {

@@ -35,7 +35,7 @@ const Login = () => {
       <div className="bg-image"></div>
       <div className="content">
         <div className="login">
-          <h2>Sign In</h2>
+          <h2>Sign <span>In</span></h2>
           <form action="" className="login__form" onSubmit={(e) => onSubmit(e)}>
             
             <div className="field-container">
