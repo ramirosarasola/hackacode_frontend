@@ -18,7 +18,7 @@ const Games = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(games);
+  
 
   return (  
     <div className='games-container'> 

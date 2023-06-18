@@ -30,33 +30,40 @@ const Login = () => {
       dispatch(loginUser({email, password}));
   };
 
-  return <div className="login">
-    <h2>Inicia Sesion</h2>
-    <form action="" className="login__form" onSubmit={(e) => onSubmit(e)}>
-      
-      <div className="field-container">
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          value={email}
-          onChange={(e) => onChange(e)}
-        />
+  return (
+    <div className="">
+      <div className="bg-image"></div>
+      <div className="content">
+        <div className="login">
+          <h2>Sign In</h2>
+          <form action="" className="login__form" onSubmit={(e) => onSubmit(e)}>
+            
+            <div className="field-container">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => onChange(e)}
+              />
+            </div>
+            
+            <div className="field-container">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={(e) => onChange(e)}
+              />
+            </div>
+            
+            <button type="submit">Log In</button>
+          </form>
+        </div>;
       </div>
-      
-      <div className="field-container">
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={(e) => onChange(e)}
-        />
-      </div>
-      
-      <button type="submit">Log In</button>
-    </form>
-  </div>;
+    </div>
+  ) 
 };
 
 export default Login;

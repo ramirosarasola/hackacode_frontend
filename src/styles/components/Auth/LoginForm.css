@@ -5,11 +5,8 @@
   height: 400px;
   background-color: #fff;
   border-radius: 5px;
+  position: relative;
   box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   padding: 70px 30px;  
 }
 

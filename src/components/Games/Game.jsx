@@ -2,11 +2,11 @@ import React from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../../styles/components/Games/Game.css';
 import { useSelector, useDispatch  } from 'react-redux';
-import { uiActions } from '../../slices/uiSlice';
+import { toggleSeeMore } from '../../slices/gameSlice';
+
 
 function Game({ game }) {
-  const { name, description, employees, hours, photo } = game;
-  const isMenuOpen = useSelector((state) => state.ui.isMenuOpen);
+  const { name, description, employees, hours, photo, isDivOpen } = game;  
 
   const dispatch = useDispatch()
 
@@ -48,7 +48,8 @@ function Game({ game }) {
   );
 
   const toggleMenu = () => {
-    dispatch(uiActions.toggle())
+    const gameId = game._id
+    dispatch(toggleSeeMore(gameId))
   }
 
   return (
@@ -67,9 +68,12 @@ function Game({ game }) {
           ))}
         </div>
       </div>
-      <button onClick={toggleMenu}><ExpandMoreIcon/></button>
-      <div className={`employees ${isMenuOpen ? 'show' : 'hide'}`}>
+      <button onClick={toggleMenu}>See More<ExpandMoreIcon/></button>
+      <div className={`employees ${isDivOpen ? 'show' : 'hide'}`}>
         <p>Employees</p>
+        {employees.map((employee, index) => (
+          <div key={index}>{employee}</div>
+        ))}
       </div>
     </div>
   );

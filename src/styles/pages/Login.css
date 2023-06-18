@@ -1,12 +1,46 @@
-.login{
-  width: 100%;
-  height: 100vh;
+.login {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f4f3ef;
+  justify-content: center;
+  height: 100vh; /* Modifica esta línea */
+  position: absolute;
 }
 
-.login h2{
+.login h2 {
   margin-top: 3rem;
+  color: black;
+  z-index: 2;
+}
+
+.bg-image {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: url('../../assets/images/attractionPark.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  object-fit: contain;
+}
+
+.bg-image::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.content {
+  position: absolute; /* Añade esta línea */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
