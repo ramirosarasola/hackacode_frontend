@@ -68,6 +68,7 @@ function GameForm() {
           const createdGame = await dispatch(createGame(gameData)).unwrap();
           setGames([...games, createdGame]);
           await dispatch(uploadPhoto({ id: createdGame._id, file: photo })).unwrap();
+          setFormData({name: "", description: "", employees: [], hours:[{opening: "", closing: ""}] ,photo:null})
         } catch (error) {
           console.log(error);
         }

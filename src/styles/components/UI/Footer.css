@@ -4,7 +4,7 @@
   height: 50px;
   /* background-color: #4a4a4a; */
   /* background-color: #2196f3da; */
-  background-color: #ffffffda;
+  background-color: #23272a;
   text-align: center;
   padding: 10px;
   z-index: 1000;
@@ -14,5 +14,5 @@
 .footer-text {
   font-size: 14px;
   /* color: #b6b6b6; */
-  color: #000;
+  color: #2196f3;
 }

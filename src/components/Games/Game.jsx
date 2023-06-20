@@ -5,6 +5,8 @@ import { useSelector, useDispatch  } from 'react-redux';
 import { toggleSeeMore } from '../../slices/gameSlice';
 import { fetchEmployees } from '../../slices/employeeSlice';
 import useDateFormatting from '../../customHooks/useDateFormatting';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { deleteGame } from '../../slices/gameSlice';
 
 
 function Game({ game }) {
@@ -33,10 +35,16 @@ function Game({ game }) {
     return employee ? employee.name : '';
   };
 
+  const onDeleteHandler = () => {
+    const gameId = game._id;
+    dispatch(deleteGame(gameId));
+  }
+
   return (
     <div className='game_card'>
       <div className="game_heading">
         <div className="image_container">
+          <button className='delete_button' onClick={onDeleteHandler}><DeleteForeverIcon/></button>
           <img src={`http://localhost:5000/uploads/${photo}`} alt="no photo" />
         </div>
         <h1>{name}</h1>
@@ -48,13 +56,13 @@ function Game({ game }) {
             <div key={index}>{time}</div>
           ))}
         </div>
-      </div>
       <button onClick={toggleMenu}>See More<ExpandMoreIcon/></button>
       <div className={`employees ${isDivOpen ? 'show' : 'hide'}`}>
         <p>Employees</p>
         {employees.map((employeeId, index) => (
           <div key={index}>{getDataEmployees(employeeId)}</div>
         ))}
+      </div>
       </div>
     </div>
   );
