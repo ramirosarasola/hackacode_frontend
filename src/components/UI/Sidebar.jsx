@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/components/UI/Sidebar.css";
 import LogoutIcon from "@mui/icons-material/Logout";
+import Loader from "./Loader";
 import {
   Box,
   List,
@@ -207,6 +208,7 @@ const Sidebar = () => {
             <LogoutIcon style={{ color: "#ffff" }} />
             <p>Logout</p>
           </button>
+          
         </Box>
       </Box>
     </section>

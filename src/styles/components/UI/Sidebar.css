@@ -20,3 +20,9 @@
   align-items: center;
   cursor: pointer;
 }
+
+.css-1ruxp1v{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
