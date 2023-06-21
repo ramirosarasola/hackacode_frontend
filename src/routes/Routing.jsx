@@ -8,6 +8,7 @@ import EmployeesData from "../pages/EmployeesData";
 import MaintenancePage from "../components/UI/MaintenancePage";
 import EditEmployee from "../components/Employees/EditEmployee";
 import GameForm from "../components/Games/GameForm";
+import Customers from "../pages/Customers";
 
 const Routing = ({ isAuthenticated }) => {
   return (
@@ -21,6 +22,7 @@ const Routing = ({ isAuthenticated }) => {
         <Route path="/employees/edit/:id" element={<EditEmployee />} />
         <Route path="/games/new" element={<GameForm />} />
         <Route path="/games" element={<Games />} />
+        <Route path="/customers/new" element={<Customers />} />
       </Route>
 
       {/* Not Found */}

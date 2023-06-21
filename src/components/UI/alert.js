@@ -36,7 +36,7 @@ const Alert = (icon, desc) => Toast.fire({
 
 const ConfirmAlert = () => swalWithBootstrapButtons.fire({
   title: 'Are you sure?',
-  text: "You won't be able to revert this!",
+  text: "You will also delete his assigned user!",
   icon: 'warning',
   showCancelButton: true,
   confirmButtonText: 'Yes, delete it!',
@@ -47,7 +47,7 @@ const ConfirmAlert = () => swalWithBootstrapButtons.fire({
     
     swalWithBootstrapButtons.fire(
       'Deleted!',
-      'Your file has been deleted.',
+      'The employee has been deleted.',
       'success'
     )
 
@@ -58,7 +58,7 @@ const ConfirmAlert = () => swalWithBootstrapButtons.fire({
   ) {
     swalWithBootstrapButtons.fire(
       'Cancelled',
-      'Your imaginary file is safe :)',
+      'Your employee is safe :)',
       'error'
     )
     return false;

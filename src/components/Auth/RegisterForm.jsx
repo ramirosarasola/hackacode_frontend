@@ -6,8 +6,6 @@ import FormGroup from "../UI/FormGroup";
 
 
 const RegisterForm = () => {
-
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   
   const dispatch = useDispatch();
 
