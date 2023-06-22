@@ -4,6 +4,7 @@ import '../../styles/components/Auth/RegisterForm.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { createGame, uploadPhoto } from '../../slices/gameSlice';
 import { fetchEmployees } from '../../slices/employeeSlice';
+import { Alert } from '../../components/UI/alert';
 
 
 function GameForm() {
@@ -64,12 +65,17 @@ function GameForm() {
             hours,
             employees
           };
-      
+          
           const createdGame = await dispatch(createGame(gameData)).unwrap();
           setGames([...games, createdGame]);
           await dispatch(uploadPhoto({ id: createdGame._id, file: photo })).unwrap();
           setFormData({name: "", description: "", employees: [], hours:[{opening: "", closing: ""}] ,photo:null})
+          if (createdGame.photo == 'no-photo.jpg') {
+            Alert('warning', 'The game is missing an image');
+          }
+          Alert('success', 'Game created successfully');
         } catch (error) {
+          Alert('error', 'Something goes wrong...')
           console.log(error);
         }
       };

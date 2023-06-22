@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateEmployee, getEmployee } from "../../slices/employeeSlice";
 import { updateUser } from "../../slices/userSlice";
 import { useParams } from "react-router-dom";
-import { Alert } from '../UI/alert';
+import { Alert, ConfirmAlert } from "../UI/alert";
 import FormGroup from "../UI/FormGroup";
-import '../../styles/components/Auth/RegisterForm.css'
+import "../../styles/components/Auth/RegisterForm.css";
 
 const EditForm = () => {
   const dispatch = useDispatch();
@@ -16,11 +16,11 @@ const EditForm = () => {
   }, [dispatch, id]);
 
   const { employees } = useSelector((state) => state.employees);
-  const {users} = useSelector(state => state.users)
+  const { users } = useSelector((state) => state.users);
 
-  const employee = employees.find(emp => emp._id == id);
+  const employee = employees.find((emp) => emp._id == id);
 
-  const user = users.find(user => user._id == employee.user);
+  const user = users.find((user) => user._id == employee.user);
 
   // I create this variable to be able to pass it to the updateUser method. Otherwise I have some problems...
   const { _id } = user;
@@ -45,15 +45,15 @@ const EditForm = () => {
       placeholder: "Name",
       label: "Name",
       value: formData.name,
-      onChange: onChange
+      onChange: onChange,
     },
     {
-      name: "lastname",
+      name: "lastName",
       type: "text",
       placeholder: "Last Name",
       label: "Last Name",
       value: formData.lastName,
-      onChange: onChange
+      onChange: onChange,
     },
     {
       name: "email",
@@ -61,7 +61,7 @@ const EditForm = () => {
       placeholder: "Email",
       label: "Email",
       value: formData.email,
-      onChange: onChange
+      onChange: onChange,
     },
     {
       name: "password",
@@ -69,7 +69,7 @@ const EditForm = () => {
       placeholder: "Password",
       label: "Password",
       value: formData.password,
-      onChange: onChange
+      onChange: onChange,
     },
     {
       name: "password2",
@@ -77,9 +77,9 @@ const EditForm = () => {
       placeholder: "Confirm Password",
       label: "Confirm Password",
       value: formData.password2,
-      onChange: onChange
-    }
-  ]
+      onChange: onChange,
+    },
+  ];
 
   useEffect(() => {
     if (employee && user) {
@@ -95,26 +95,31 @@ const EditForm = () => {
     }
   }, [employee]);
 
- 
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
-      Alert('error', 'Passwords do not match');
+      Alert("error", "Passwords do not match");
     } else {
       const updatedEmployee = {
         name,
-        lastName
+        lastName,
       };
       const updatedUser = {
         email,
-        password
-      }
-      dispatch(updateEmployee({ id, employeeData: updatedEmployee }));
-      // Missing method to updateUSer
-      dispatch(updateUser({ _id , userData: updatedUser }));
+        password,
+      };
       console.log(updatedEmployee);
-      Alert('success', 'Employee updated!')
+      console.log(updateUser);
+      // Alert("success", "Employee updated!");
+
+      ConfirmAlert('Are you sure?',`Final results: Name: ${name} \n Lastname: ${lastName} \n Email: ${email}`, 'Yes, update it', 'No, go back').then((result) => {
+        if (updatedEmployee && updateUser && result) {
+          dispatch(updateEmployee({ id, employeeData: updatedEmployee }));
+          dispatch(updateUser({ _id, userData: updatedUser }));
+        } else {
+          console.log("edition canceled...");
+        }
+      });
     }
   };
 

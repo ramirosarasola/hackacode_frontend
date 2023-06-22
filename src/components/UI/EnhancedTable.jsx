@@ -233,6 +233,8 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable({ employees, users }) {
   const { user } = useSelector((state) => state.auth);
+  const { games } = useSelector((state) => state.games);
+  console.log(games);
   console.log(user);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("name");
@@ -251,6 +253,15 @@ export default function EnhancedTable({ employees, users }) {
   };
 
   const handleDelete = (id) => {
+
+    let hasGameAssigned;
+
+    games.map((game) => {
+      if (game.employees[0] === id) {
+        hasGameAssigned = `If you delete this employee, ${game.name} will be disabled.`
+      }
+    })
+
     console.info("selected id: " + id);
     const employee = employees.filter((employee) => employee._id == id);
     console.info(employee);
@@ -258,7 +269,9 @@ export default function EnhancedTable({ employees, users }) {
     let user_id = employee[0].user;
     console.log(user_id);
 
-    ConfirmAlert().then((result) => {
+
+
+    ConfirmAlert('Are you sure?', `${hasGameAssigned || 'Yo will delete also his assigned user'}`, 'Yes, delete it', 'No, cancell').then((result) => {
 
       if (employee && result) {
         dispatch(deleteUser(user_id))
@@ -275,7 +288,8 @@ export default function EnhancedTable({ employees, users }) {
     if (employees.length > 0 && users.length > 0) {
       setRows(
         employees.map((item) => {
-          let foundUser = users.find((user) => user._id == item.user);
+          let foundUser = users.find((user) => user._id == item.user) || {email:'please refresh...'};
+          console.log(foundUser);
           return createData(
             item.name,
             item.lastName,
@@ -389,7 +403,7 @@ export default function EnhancedTable({ employees, users }) {
                       {(user.data.role && user.data.role == 'admin')
                       
                         &&
-                      <TableCell align="left">
+                        <TableCell align="left" style={{ display: 'flex', gap:'10px'}}>
                         <button
                           className="action-btn"
                           style={{

@@ -12,15 +12,15 @@ const Games = () => {
   const isLoading = useSelector(state => state.games.isLoading)
   const [showContent, setShowContent] = useState(false);
 
-  const timer = setTimeout(() => {
-    setShowContent(true);
-  }, 50000);
+  // const timer = setTimeout(() => {
+  //   setShowContent(true);
+  // }, 1000);
 
   useEffect(() => {
     dispatch(getGames())
   }, [dispatch])
 
-  if (isLoading || !showContent) {
+  if (isLoading) {
     return <Loader/>;
   }
 
@@ -28,7 +28,6 @@ const Games = () => {
 
   return (
     <div className='games-container'>
-      <Loader/>
       {games.length > 0 ? (
         games.map((game) => {
           if (game.available === true) {

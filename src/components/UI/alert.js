@@ -34,35 +34,31 @@ const Alert = (icon, desc) => Toast.fire({
   title: desc
 })
 
-const ConfirmAlert = () => swalWithBootstrapButtons.fire({
-  title: 'Are you sure?',
-  text: "You will also delete his assigned user!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonText: 'Yes, delete it!',
-  cancelButtonText: 'No, cancel!',
-  reverseButtons: true
-}).then((result) => {
+const ConfirmAlert = async (title, info, confirmText, cancelText) => {
+  const result = await swalWithBootstrapButtons.fire({
+    title: title,
+    text: info,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: confirmText,
+    cancelButtonText: cancelText,
+    reverseButtons: true
+  });
   if (result.isConfirmed) {
-    
     swalWithBootstrapButtons.fire(
-      'Deleted!',
-      'The employee has been deleted.',
+      'Confirmed!',
+      'The action has been executed.',
       'success'
-    )
-
+    );
     return true;
-  } else if (
-    /* Read more about handling dismissals below */
-    result.dismiss === Swal.DismissReason.cancel
-  ) {
+  } else if (result.dismiss === Swal.DismissReason.cancel) {
     swalWithBootstrapButtons.fire(
       'Cancelled',
-      'Your employee is safe :)',
+      'The action has been cancelled.',
       'error'
-    )
+    );
     return false;
   }
-})
+};
 
 export { Alert, ConfirmAlert }

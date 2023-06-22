@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../../styles/components/Games/Game.css';
 import { useSelector, useDispatch  } from 'react-redux';
@@ -12,10 +12,10 @@ import { deleteGame } from '../../slices/gameSlice';
 function Game({ game }) {
 
   const { formatDateTimeRange } = useDateFormatting();
-  const { name, description, employees, hours, photo, isDivOpen, available } = game;  
+  const { name, description, employees, hours, photo, available } = game;  
   const employeesList = useSelector(state => state.employees.employees);
+  const [isDivOpen, setIsDivOpen] = useState(false)
   const dispatch = useDispatch()
-
 
   useEffect(() => {
     dispatch(fetchEmployees());
@@ -27,8 +27,9 @@ function Game({ game }) {
   );
 
   const toggleMenu = () => {
-    const gameId = game._id
-    dispatch(toggleSeeMore(gameId))
+    // const gameId = game._id
+    // dispatch(toggleSeeMore(gameId))
+    setIsDivOpen(!isDivOpen)
   }
 
   const getDataEmployees = (employeeId) => {
