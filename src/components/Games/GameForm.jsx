@@ -122,7 +122,7 @@ function GameForm() {
           placeholder: "Employees",
           label: "Employees",
           value: employees,
-          options: employeesList.filter(employee => employee.type === 'manager').map((employee) => ({
+          options: employeesList.filter(employee => employee.type === 'employee').map((employee) => ({
             value: employee._id,
             label: `${employee.name} ${employee.lastName}`,
           })),

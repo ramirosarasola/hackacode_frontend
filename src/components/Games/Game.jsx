@@ -12,9 +12,10 @@ import { deleteGame } from '../../slices/gameSlice';
 function Game({ game }) {
 
   const { formatDateTimeRange } = useDateFormatting();
-  const { name, description, employees, hours, photo, isDivOpen } = game;  
+  const { name, description, employees, hours, photo, isDivOpen, available } = game;  
   const employeesList = useSelector(state => state.employees.employees);
   const dispatch = useDispatch()
+
 
   useEffect(() => {
     dispatch(fetchEmployees());
@@ -40,6 +41,7 @@ function Game({ game }) {
     dispatch(deleteGame(gameId));
   }
 
+
   return (
     <div className='game_card'>
       <div className="game_heading">
@@ -47,7 +49,9 @@ function Game({ game }) {
           <button className='delete_button' onClick={onDeleteHandler}><DeleteForeverIcon/></button>
           <img src={`http://localhost:5000/uploads/${photo}`} alt="no photo" />
         </div>
-        <h1>{name}</h1>
+        <div className="title">
+          <h1>{name}</h1>
+        </div>
       </div>
       <div className="game_content">
         <p className="description">{description}</p>
