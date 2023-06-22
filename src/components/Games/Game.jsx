@@ -34,8 +34,15 @@ function Game({ game }) {
 
   const getDataEmployees = (employeeId) => {
     const employee = employeesList.find((employee) => employee._id === employeeId);
-    return employee ? employee.name : '';
+    return employee ? (
+      <div>
+        {employee.name} <span>{employee.lastName}</span>
+      </div>
+    ) : (
+      ''
+    );
   };
+  
 
   const onDeleteHandler = () => {
     const gameId = game._id;
@@ -65,7 +72,7 @@ function Game({ game }) {
       <div className={`employees ${isDivOpen ? 'show' : 'hide'}`}>
         <p>Employees</p>
         {employees.map((employeeId, index) => (
-          <div key={index}>{getDataEmployees(employeeId)}</div>
+          <div className='employee' key={index}>{getDataEmployees(employeeId)}</div>
         ))}
       </div>
       </div>
