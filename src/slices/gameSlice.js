@@ -4,7 +4,7 @@ import axios from 'axios';
 const initialState = {
   games: [],
   isLoading: false,
-  isDivOpen: true,
+  expandedCards: {},
 };
 
 export const createGame = createAsyncThunk(
@@ -100,10 +100,8 @@ export const gameSlice = createSlice({
   reducers: {
     toggleSeeMore(state, action) {
       const gameId = action.payload;
-      const game = state.games.find((game) => game._id === gameId);
-      if (game) {
-        game.isDivOpen = !game.isDivOpen;
-      }
+      state.expandedCards[gameId] = !state.expandedCards[gameId];
+      console.log(JSON.stringify(state.expandedCards));
     },
   },
   extraReducers: (builder) => {

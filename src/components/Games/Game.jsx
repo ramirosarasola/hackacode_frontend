@@ -12,8 +12,9 @@ import { deleteGame } from '../../slices/gameSlice';
 function Game({ game }) {
 
   const { formatDateTimeRange } = useDateFormatting();
-  const { name, description, employees, hours, photo, isDivOpen, available } = game;  
+  const { name ,description, employees, hours, photo, available } = game;  
   const employeesList = useSelector(state => state.employees.employees);
+  const isDivOpen = useSelector(state => state.games.expandedCards[game._id]);
   const dispatch = useDispatch()
 
 
@@ -33,8 +34,15 @@ function Game({ game }) {
 
   const getDataEmployees = (employeeId) => {
     const employee = employeesList.find((employee) => employee._id === employeeId);
-    return employee ? employee.name : '';
+    return employee ? (
+      <div>
+        {employee.name} <span>{employee.lastName}</span>
+      </div>
+    ) : (
+      ''
+    );
   };
+  
 
   const onDeleteHandler = () => {
     const gameId = game._id;
@@ -64,7 +72,7 @@ function Game({ game }) {
       <div className={`employees ${isDivOpen ? 'show' : 'hide'}`}>
         <p>Employees</p>
         {employees.map((employeeId, index) => (
-          <div key={index}>{getDataEmployees(employeeId)}</div>
+          <div className='employee' key={index}>{getDataEmployees(employeeId)}</div>
         ))}
       </div>
       </div>

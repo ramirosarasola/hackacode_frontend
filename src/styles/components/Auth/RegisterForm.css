@@ -7,7 +7,7 @@
   margin-top: 45px;
 }
 
-/*falta estilar los elementos dentro del formulario */
+
 
 .form_container input,
 .form_container select{
@@ -19,7 +19,7 @@
   padding: 0 10px;
 }
 
-/*por ultimo estilar el boton de color azul*/
+
 
 .form_container button{
   width: 100%;
