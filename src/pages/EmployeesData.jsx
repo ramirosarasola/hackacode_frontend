@@ -4,12 +4,13 @@ import EnhancedTable from '../components/UI/EnhancedTable';
 import { fetchEmployees } from '../slices/employeeSlice';
 import { fetchUsers } from '../slices/userSlice';
 import "../styles/pages/EmployeesData.css";
+import Loader from '../components/UI/Loader';
 
 const EmployeesData = () => {
   const dispatch = useDispatch();
   const { employees, loading, error } = useSelector(state => state.employees);
   const { users } = useSelector(state => state.users);
-  // console.log(users);
+
 
   useEffect(() => {
     dispatch(fetchEmployees());
@@ -18,7 +19,7 @@ const EmployeesData = () => {
   }, [dispatch]);
 
   if (loading) {
-    return <div>Cargando empleados...</div>;
+    return <Loader/>;
   }
 
   if (error) {
