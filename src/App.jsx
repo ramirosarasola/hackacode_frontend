@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { loadUser } from "./slices/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Routing from "./routes/Routing";
+import Loader from "./components/UI/Loader";
 
 const App = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -18,7 +19,7 @@ const App = () => {
   }, [dispatch]);
 
   if (localStorage.getItem('token') && isLoading) {
-    return <p>Loading</p>;
+    return <Loader/>;
   }
 
   return (
