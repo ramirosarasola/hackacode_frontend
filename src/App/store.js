@@ -4,6 +4,7 @@ import { uiSlice } from '../slices/uiSlice';
 import { employeeSlice } from '../slices/employeeSlice';
 import { userSlice } from '../slices/userSlice';
 import { gameSlice } from '../slices/gameSlice';
+import {customerSlice} from '../slices/customerSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     employees: employeeSlice.reducer,
     users: userSlice.reducer,
     games: gameSlice.reducer,
+    customers: customerSlice.reducer,
   },
 });

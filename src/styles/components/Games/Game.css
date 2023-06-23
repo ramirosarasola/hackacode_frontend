@@ -1,8 +1,8 @@
 .game_card{
     width: 300px;
-    /* height: auto; */
+    height: fit-content;
     /* max-height: 400px; */
-    height: 450px;
+    /* height: 450px; */
     border-radius: 20px;
     margin: 20px;
     display: flex;

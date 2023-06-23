@@ -96,7 +96,7 @@ export const customerSlice = createSlice({
       })
       .addCase(fetchCustomers.fulfilled, (state, action) => {
         state.loading = false;
-        state.employees = action.payload;
+        state.customers = action.payload;
       })
       .addCase(fetchCustomers.rejected, (state, action) => {
         state.loading = false;

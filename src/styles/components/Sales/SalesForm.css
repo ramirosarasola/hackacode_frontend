@@ -1,0 +1,64 @@
+.sales__form{
+  width: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+  padding: 30px 30px;  
+  margin-top: 45px;
+}
+
+h2{
+  margin-bottom: 1rem;
+}
+
+.sales__form input,
+.sales__form select{
+  /* width: 100%; */
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 0 10px;
+  margin: 10px 20px;
+}
+
+.sales__form__container{
+  display: flex;
+  width: 800px;
+  justify-content: space-between;
+}
+
+.sales__customer--info{
+  padding-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+
+.sales__sales--info{
+  padding-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: none;
+
+}
+
+.sales__personal--info label{
+  margin-left: 20px;
+}
+.sales__sales--info label{
+  margin-left: 20px;
+}
+
+.sales__form button{
+  width: 100px;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #0a1929;
+  color: white;
+  /* margin: 33px 0 0 20px; */
+  margin: auto;
+}

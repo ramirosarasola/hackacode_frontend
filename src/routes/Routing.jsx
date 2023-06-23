@@ -9,6 +9,7 @@ import MaintenancePage from "../components/UI/MaintenancePage";
 import EditEmployee from "../components/Employees/EditEmployee";
 import GameForm from "../components/Games/GameForm";
 import Customers from "../pages/Customers";
+import SalesForm from "../components/Sales/SalesForm";
 
 const Routing = ({ isAuthenticated }) => {
   return (
@@ -23,6 +24,7 @@ const Routing = ({ isAuthenticated }) => {
         <Route path="/games/new" element={<GameForm />} />
         <Route path="/games" element={<Games />} />
         <Route path="/customers/new" element={<Customers />} />
+        <Route path="/sales/new" element={<SalesForm />} />
       </Route>
 
       {/* Not Found */}
