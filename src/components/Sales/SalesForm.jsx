@@ -5,6 +5,7 @@ import { newSale } from "../../slices/salesSlice";
 import { fetchCustomers } from "../../slices/customerSlice";
 import { createTicket } from "../../slices/ticketSlice";
 import { getGames } from "../../slices/gameSlice";
+import { Alert } from "../UI/alert";
 
 const SalesForm = () => {
   const { customers } = useSelector((state) => state.customers);
@@ -35,6 +36,12 @@ const SalesForm = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData[0].customerId) {
+      Alert("warning","Please select a customer before entering a game");
+      return;
+    }
+
     const ticketsToSale = formData.flatMap((item) => {
       const tickets = [];
       for (let i = 0; i < item.ticketAmount; i++) {
@@ -121,11 +128,19 @@ const SalesForm = () => {
       }
     }, [selectedGame, ticketAmount]);
   
+    const isCustomerSelected = !!formData[0]?.customerId;
+    const isGameDisabled = !isCustomerSelected;
+  
     return (
       <div className="sale-data-inputs">
         <label className="sale-data-label">
           Game
-          <select name="gameId" value={gameId} onChange={handleGameChange}>
+          <select
+            name="gameId"
+            value={gameId}
+            onChange={handleGameChange}
+            disabled={isGameDisabled}
+          >
             <option value="">Select a Game</option>
             {games?.map((game, i) => (
               <option key={i} value={game._id}>
@@ -142,17 +157,32 @@ const SalesForm = () => {
             name="ticketAmount"
             value={ticketAmount}
             onChange={(e) => handleTicketAmountChange(e)}
+            disabled={isGameDisabled}
           />
         </label>
         
         <label>
           Total
-          <input disabled type="number" name="total" value={formData[index]?.gameId ? games.find((game) => game._id == formData[index].gameId).price * ticketAmount : 0} />
+          <input
+            disabled
+            type="number"
+            name="total"
+            value={
+              formData[index]?.gameId
+                ? games.find((game) => game._id == formData[index].gameId).price *
+                  ticketAmount
+                : 0
+            }
+          />
         </label>
         <button className="addSale" onClick={handleAddGame}>
           +
         </button>
-        <button className="removeSale" onClick={() => handleRemoveGame(index)}>
+        <button
+          className="removeSale"
+          onClick={() => handleRemoveGame(index)}
+          disabled={!isCustomerSelected}
+        >
           -
         </button>
       </div>
