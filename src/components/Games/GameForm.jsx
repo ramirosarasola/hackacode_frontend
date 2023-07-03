@@ -19,6 +19,7 @@ function GameForm() {
     const [formData, setFormData] = useState({
         name: "",
         description: "",
+        price: "",
         employees: [],
         hours: [
           {
@@ -29,7 +30,7 @@ function GameForm() {
         photo:null
       });
     
-      const { name, description,  hours, employees, photo } = formData;
+      const { name, description,  hours, employees, photo, price } = formData;
     
       const onChange = (e) => {
         if (e.target.name === 'opening' || e.target.name === 'closing') {
@@ -48,7 +49,10 @@ function GameForm() {
             .map((option) => option.value);
           setFormData({ ...formData, [e.target.name]: selectedOptions });
         } else if (e.target.name === 'photo') {
-          setFormData({ ...formData, photo: e.target.files[0] }); // Update this line
+          setFormData({ ...formData, photo: e.target.files[0] });
+        } else if (e.target.name === 'price') {
+          const value = e.target.value.replace(/[^0-9.]/g, ''); 
+          setFormData({ ...formData, price: value }); 
         } else {
           setFormData({ ...formData, [e.target.name]: e.target.value });
         }
@@ -63,6 +67,7 @@ function GameForm() {
             name,
             description,
             hours,
+            price,
             employees
           };
           
@@ -97,6 +102,15 @@ function GameForm() {
           placeholder: "Description",
           label: "Description",
           value: description,
+          onChange: onChange
+        },
+        {
+          name: "price",
+          type: "number",
+          placeholder: "Price",
+          label: "Price",
+          value: price,
+          step: "0.001",
           onChange: onChange
         },
         {
