@@ -7,6 +7,7 @@ import { fetchEmployees } from '../../slices/employeeSlice';
 import useDateFormatting from '../../customHooks/useDateFormatting';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { deleteGame } from '../../slices/gameSlice';
+import { ConfirmAlert } from '../../components/UI/alert';
 
 
 function Game({ game }) {
@@ -46,12 +47,22 @@ function Game({ game }) {
 
   const onDeleteHandler = () => {
     const gameId = game._id;
-    dispatch(deleteGame(gameId));
+    const hasEmployeesAssigned = game?.employees?.length;
+
+    ConfirmAlert('Are you sure?', `${hasEmployeesAssigned >0 ? 'This game has one or more employees working on it!': 'You will not be able to revert this.'}`, 'Yes, delete it', 'No, cancell').then((result) => {
+
+      if (hasEmployeesAssigned && result) {
+        dispatch(deleteGame(gameId));
+        console.info("game deleted....");
+      } else {
+        console.log("deletion canceled...");
+      }
+    });
   }
 
 
   return (
-    <div className='game_card'>
+    <div className={`game_card ${!game.available && 'disabled'}`}>
       <div className="game_heading">
         <div className="image_container">
           <button className='delete_button' onClick={onDeleteHandler}><DeleteForeverIcon/></button>

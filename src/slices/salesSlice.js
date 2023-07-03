@@ -8,18 +8,18 @@ const initialState = {
   error: null,
 }
 
-export const assignSale = createAsyncThunk(
-  'sales/assignSale',
-  async (newSale, { rejectWithValue }) => {
+export const newSale = createAsyncThunk(
+  'sales/newSale',
+  async (tickets, { rejectWithValue }) => {
     try {
       const config = {
         headers: {
           'Content-Type': 'application/json',
         },
       };
-      const body = JSON.stringify(newSale);
+      const body = JSON.stringify(tickets);
       const response = await axios.post(
-        'http://localhost:5000/api/sales/new',
+        'http://localhost:5000/api/sales',
         body,
         config
       );
@@ -96,11 +96,22 @@ export const saleSlice = createSlice({
       })
       .addCase(fetchSales.fulfilled, (state, action) => {
         state.loading = false;
-        state.employees = action.payload;
+        state.sales = action.payload;
       })
       .addCase(fetchSales.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(newSale.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(newSale.fulfilled, (state, action) => {
+        state.loading = false;
+        state.sales.push(action.payload);
+      })
+      .addCase(newSale.rejected, (state) => {
+        state.loading = false;
+        state.sales = [];
       })
       .addCase(updateSale.pending, (state) => {
         state.loading = true;

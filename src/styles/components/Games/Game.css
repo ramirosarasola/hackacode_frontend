@@ -12,6 +12,21 @@
     box-shadow: 0 1px 8px #0003;
 }
 
+.disabled{
+    filter: grayscale(90%);
+    user-select:none ;
+    -moz-user-select:-moz-none ;
+    -webkit-user-drag:none ;
+    -webkit-touch-callout:none ;
+    /* cursor: default !important; */
+    /* pointer-events: none!important; */
+    /* transform: scale(.7);
+    z-index: 1;
+    position: absolute;
+    top:.6rem;
+    right:.6rem; */
+}
+
 .game_card.show{
     height: auto;
 }
@@ -20,7 +35,6 @@
     display: block;
     transition: ease-in;
     opacity: 1;
-    
 }
 
 .game_heading{

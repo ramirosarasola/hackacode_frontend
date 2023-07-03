@@ -1,6 +1,89 @@
-.games-container{
+.games {
     display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.games-title {
+    font-size: 1.5em;
+    margin-top: 2rem;
+    text-align: center;
+    color: #000;
+    transition: all ease-in-out .3s;
+}
+
+.games-container {
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
     padding: 50px;
     margin: 0 auto;
     flex-wrap: wrap;
+}
+
+.see-disabled-button {
+    /* Switch button to see disables games */
+    margin-top: 2rem;
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    margin-right: 10rem;
+}
+
+/* Styles for the toggle button */
+.toggle-button {
+    position: absolute;
+    margin-top: 2rem;
+    top: 0;
+    right: 0;
+    margin-right: 10rem;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide the default checkbox */
+.toggle-button input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Style the toggle switch */
+.toggle-button label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Style the toggle switch handle */
+.toggle-button label::before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+/* Change the background color when the toggle is checked */
+.toggle-button input[type="checkbox"]:checked+label {
+    background-color: #2196F3;
+}
+
+/* Move the toggle switch handle to the right when checked */
+.toggle-button input[type="checkbox"]:checked+label::before {
+    transform: translateX(26px);
 }
