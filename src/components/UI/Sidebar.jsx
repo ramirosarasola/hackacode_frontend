@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../../styles/components/UI/Sidebar.css";
 import LogoutIcon from "@mui/icons-material/Logout";
+import   BarChartIcon from "@mui/icons-material/BarChart";
+import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
 import {
   Box,
@@ -31,6 +33,7 @@ const Sidebar = () => {
     sales: false,
   });
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -44,6 +47,11 @@ const Sidebar = () => {
       [section]: !prevState[section],
     }));
   };
+
+  const handleStatistics = () => {
+    navigate("/statistics");
+  }
+  
 
   return (
     <section
@@ -203,6 +211,16 @@ const Sidebar = () => {
                 </Link>
               </List>
             </Collapse>
+            <ListItemButton onClick={handleStatistics}>
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText
+                disableTypography
+                primary="Statistics"
+                style={{ color: "#ffff" }}
+              />
+            </ListItemButton>
           </List>
           <button className="logout" onClick={() => handleLogout()}>
             <LogoutIcon style={{ color: "#ffff" }} />
