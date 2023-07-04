@@ -37,6 +37,12 @@
     opacity: 1;
 }
 
+.game_card:hover .edit_button{
+    display: block;
+    transition: ease-in;
+    opacity: 1;
+}
+
 .game_heading{
     width: 100%;
     display: flex;
@@ -137,6 +143,20 @@ button{
     position: absolute;
     top: 0;
     right: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: none;
+    transition: .3s ease-in-out;
+    opacity: 0;
+
+}
+
+.edit_button{
+    background-color: #0081cf;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 40px;
     height: 40px;
     border-radius: 10px;

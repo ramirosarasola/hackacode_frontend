@@ -26,12 +26,8 @@ const Games = () => {
 
   return (
     <section className="games">
-      {/* <button className="button__toggle" onClick={handleDisabled}>{`${
-        showDisabled ? "Show Avaliable" : "Show All"
-        }`}</button> */}
-      <div class="toggle-button">
+      <div className="toggle-button">
         <input type="checkbox" id="toggle" onClick={handleDisabled} />
-        <label for="toggle"></label>
       </div>
       <h2 className="games-title">All Games</h2>
       <div className="games-container">
@@ -40,7 +36,6 @@ const Games = () => {
             if (showDisabled) {
               return <Game key={game._id} game={game} />;
             } else {
-              // Show only the enabled games by checking their status property is true or not
               if (game.available) {
                 return <Game key={game._id} game={game} />;
               }

@@ -194,7 +194,7 @@ const Sidebar = () => {
                   </ListItemButton>
                 </Link>
                 <Link
-                  to="/sales/data"
+                  to="/sales"
                   style={{ color: "#ffff", textDecoration: "none" }}
                 >
                   <ListItemButton sx={{ pl: 4 }}>

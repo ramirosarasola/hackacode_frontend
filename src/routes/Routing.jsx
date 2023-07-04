@@ -10,6 +10,7 @@ import EditEmployee from "../components/Employees/EditEmployee";
 import GameForm from "../components/Games/GameForm";
 import Customers from "../pages/Customers";
 import SalesForm from "../components/Sales/SalesForm";
+import GameEditor from "../components/Games/GameEditor";
 
 const Routing = ({ isAuthenticated }) => {
   return (
@@ -22,6 +23,7 @@ const Routing = ({ isAuthenticated }) => {
         <Route path="/employees/data" element={<EmployeesData />} />
         <Route path="/employees/edit/:id" element={<EditEmployee />} />
         <Route path="/games/new" element={<GameForm />} />
+        <Route path="/games/edit/:id" element={<GameEditor/>} />
         <Route path="/games" element={<Games />} />
         <Route path="/customers/new" element={<Customers />} />
         <Route path="/sales/new" element={<SalesForm />} />

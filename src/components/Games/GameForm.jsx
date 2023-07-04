@@ -2,33 +2,53 @@ import React, { useState, useEffect } from 'react'
 import FormGroup from '../UI/FormGroup'
 import '../../styles/components/Auth/RegisterForm.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { createGame, uploadPhoto } from '../../slices/gameSlice';
+import { createGame, getGames, uploadPhoto } from '../../slices/gameSlice';
 import { fetchEmployees } from '../../slices/employeeSlice';
 import { Alert } from '../../components/UI/alert';
 
 
-function GameForm() {
-
+function GameForm({id}) {
   const { employees: employeesList } = useSelector((state) => state.employees);
+  const { games: allGames } = useSelector((state) => state.games);
+  const [editForm, setEditForm] = useState(false);
+
+  const isEditingForm = () => {
+    const currentPath = window.location.pathname;
+    currentPath.includes('edit') ? setEditForm(true) : setEditForm(false);
+  }
+
+  useEffect(() => {
+    isEditingForm()
+  },[])
+
+  
+  const editedGame = allGames.find((game) => game._id == id);
+
   const dispatch = useDispatch();
   const [games, setGames] = useState([]);
   useEffect(() => {
     dispatch(fetchEmployees());
+    dispatch(getGames())
   }, [dispatch]);
 
+  // capturar la url
+  
+
     const [formData, setFormData] = useState({
-        name: "",
-        description: "",
-        price: "",
-        employees: [],
-        hours: [
+        name: editedGame?.name || "",
+        description: editedGame?.description ||"",
+        price: editedGame?.price ||"",
+        employees: editedGame?.employees ||[],
+        hours: editedGame?.hours ||[
           {
             opening: "",
             closing: ""
           }
         ],
-        photo:null
-      });
+        photo:editedGame?.photo ||null
+    });
+  
+  console.log(formData);
     
       const { name, description,  hours, employees, photo, price } = formData;
     
@@ -159,7 +179,8 @@ function GameForm() {
         {formFields.map((field) => (
           <FormGroup key={field.name} {...field} multiple={field.multiple} />
         ))}
-        <button type="submit">Register</button>
+        <button type="submit" className={`${editForm ? "hide" : "show"}`}>Register</button>
+        <button type="submit" className={`${editForm ? "show" : "hide"}`}>Save Changes</button>
       </form>
     </div>
   )

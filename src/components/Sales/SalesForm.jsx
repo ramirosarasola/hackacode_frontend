@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/components/Sales/SalesForm.css";
 import { useDispatch, useSelector } from "react-redux";
-import { newSale } from "../../slices/salesSlice";
+import { newSale } from "../../slices/saleSlice";
 import { fetchCustomers } from "../../slices/customerSlice";
 import { createTicket } from "../../slices/ticketSlice";
 import { getGames } from "../../slices/gameSlice";

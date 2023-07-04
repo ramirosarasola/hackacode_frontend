@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import '../../styles/components/Games/Game.css';
 import { useSelector, useDispatch  } from 'react-redux';
-import { toggleSeeMore } from '../../slices/gameSlice';
 import { fetchEmployees } from '../../slices/employeeSlice';
 import useDateFormatting from '../../customHooks/useDateFormatting';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
 import { deleteGame } from '../../slices/gameSlice';
 import { ConfirmAlert } from '../../components/UI/alert';
+import { useNavigate } from 'react-router-dom';
 
 
 function Game({ game }) {
@@ -17,6 +18,8 @@ function Game({ game }) {
   const employeesList = useSelector(state => state.employees.employees);
   const [isDivOpen, setIsDivOpen] = useState(false)
   const dispatch = useDispatch()
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchEmployees());
@@ -60,12 +63,19 @@ function Game({ game }) {
     });
   }
 
+  const onEditHandler = () => {
+    console.log("open editor...");
+    navigate("/games/edit/" + game._id)
+
+  }
+
 
   return (
     <div className={`game_card ${!game.available && 'disabled'}`}>
       <div className="game_heading">
         <div className="image_container">
           <button className='delete_button' onClick={onDeleteHandler}><DeleteForeverIcon/></button>
+          <button className='edit_button' onClick={onEditHandler}><EditIcon/></button>
           <img src={`http://localhost:5000/uploads/${photo}`} alt="no photo" />
         </div>
         <div className="title">

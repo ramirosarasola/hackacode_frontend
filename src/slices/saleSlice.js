@@ -32,18 +32,19 @@ export const newSale = createAsyncThunk(
   }
 );
 
-export const fetchSales = createAsyncThunk(
-  'sales/fetchSales',
+export const getSales = createAsyncThunk(
+  'sales/getSales',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get('http://localhost:5000/api/sales');
-      // console.log(response.data);
+      console.log(response.data);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
+
 
 export const getSale = createAsyncThunk(
   'sales/getSale',
@@ -90,17 +91,17 @@ export const saleSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchSales.pending, (state) => {
+      .addCase(getSales.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchSales.fulfilled, (state, action) => {
-        state.loading = false;
-        state.sales = action.payload;
-      })
-      .addCase(fetchSales.rejected, (state, action) => {
+      .addCase(getSales.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(getSales.fulfilled, (state, action) => {
+        state.loading = false;
+        state.sales = action.payload;
       })
       .addCase(newSale.pending, (state) => {
         state.loading = true;
