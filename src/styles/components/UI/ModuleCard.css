@@ -10,6 +10,10 @@
     box-shadow: 10px 10px 20px -7px rgba(0,0,0,1);
 }
 
+.card-container a{
+    text-decoration: none;
+}
+
 .card-heading{
     display: flex;
     align-items: center;
