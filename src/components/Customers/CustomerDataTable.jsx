@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import '../../styles/components/Customers/CustomerDataTable.css';
+// import '../../styles/pages/CustomerData.css';
 
 const CustomerTableData = ({ customers, onDeleteCustomer, onUpdateCustomer }) => {
   const [editedFields, setEditedFields] = useState({});

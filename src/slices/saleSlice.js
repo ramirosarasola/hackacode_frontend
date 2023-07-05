@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { Alert } from '../components/UI/alert';
+import { Alert, ConfirmAlert } from '../components/UI/alert';
 import axios from 'axios';
 
 const initialState = {
@@ -78,9 +78,21 @@ export const deleteSale = createAsyncThunk(
   'sales/deleteSale',
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:5000/api/sales/${id}`);
-      return id;
+      const confirmDelete = await ConfirmAlert(
+        'Delete Sale',
+        'Are you sure you want to delete this sale?',
+        'Delete',
+        'Cancel'
+      );
+      if (confirmDelete) {
+        await axios.delete(`http://localhost:5000/api/sales/${id}`);
+        Alert('success', 'Sale deleted successfully');
+        return id;
+      } else {
+        return rejectWithValue('Cancelled');
+      }
     } catch (error) {
+      Alert('error', 'Sorry, try again');
       return rejectWithValue(error.response.data);
     }
   }

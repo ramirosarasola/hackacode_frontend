@@ -10,9 +10,11 @@ import EditEmployee from "../components/Employees/EditEmployee";
 import GameForm from "../components/Games/GameForm";
 import Customers from "../pages/Customers";
 import SalesForm from "../components/Sales/SalesForm";
+import SalesData from "../components/Sales/SalesData";
 import StatisticsPage from "../pages/StatisticsPage";
 import GameEditor from "../components/Games/GameEditor";
 import CustomersData from "../components/Customers/CustomersData";
+import Tickets from "../components/Tickets/Tickets";
 
 const Routing = ({ isAuthenticated }) => {
   return (
@@ -30,7 +32,9 @@ const Routing = ({ isAuthenticated }) => {
         <Route path="/customers/new" element={<Customers />} />
         <Route path="/customers/data" element={<CustomersData />} />
         <Route path="/sales/new" element={<SalesForm />} />
+        <Route path="/sales" element={<SalesData />} />
         <Route path="/statistics" element={<StatisticsPage />} />
+        <Route path="/tickets" element={<Tickets />} />
       </Route>
 
       {/* Not Found */}

@@ -71,6 +71,47 @@ export const getTicketsByGameAndDate = createAsyncThunk(
   }
 );
 
+export const deleteTicket = createAsyncThunk(
+  'tickets/deleteTicket',
+  async (id, { rejectWithValue }) => {
+    try {
+      const confirmDelete = await ConfirmAlert(
+        'Delete Ticket',
+        'Are you sure you want to delete this ticket?',
+        'Delete',
+        'Cancel'
+      );
+      if (confirmDelete) {
+        await axios.delete(`http://localhost:5000/api/tickets/${id}`);
+        Alert('success', 'Ticket deleted successfully');
+        return id;
+      } else {
+        return rejectWithValue('Cancelled');
+      }
+    } catch (error) {
+      Alert('error', 'Sorry, try again');
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const updateTicket = createAsyncThunk(
+  'tickets/updateTickets',
+  async ({ id, ticketData }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/tickets/${id}`,
+        ticketData
+      );
+      Alert('success', 'Ticket updated successfully');
+      return response.data.data;
+    } catch (error) {
+      Alert('error', 'Sorry, try again');
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const ticketSlice = createSlice({
   name: 'tickets',
   initialState,

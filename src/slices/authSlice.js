@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
+import { Alert } from '../components/UI/alert';
+
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -74,6 +76,7 @@ export const loginUser = createAsyncThunk(
       dispatch(loadUser(data));
       return data;
     } catch (err) {
+      Alert('error', 'Invalid credentials');
       return rejectWithValue(err.response.data);
     }
   }
