@@ -5,6 +5,8 @@ const initialState = {
   games: [],
   isLoading: false,
   expandedCards: {},
+  tickets: null,
+  moreTicketsTodayGame: null,
 };
 
 export const createGame = createAsyncThunk(
@@ -94,6 +96,46 @@ export const deleteGame = createAsyncThunk(
   }
 );
 
+//Get all the tickets for all games in a specific date
+
+export const ticketsForGamesByDate = createAsyncThunk(
+  'games/ticketsForGamesByDate',
+  async ({ year, month, day }, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/api/games/tickets-sold-by-date?year=${year}&month=${month}&day=${day}`
+      );
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+//Get the Game that sold more Tickets until today´s Date
+export const gameWithMoreTicketsToday = createAsyncThunk(
+  'games/gameWithMoreTicketsToday',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(
+        'http://localhost:5000/api/games/most-tickets'
+      );
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+/* export const ticketsForAGameByDate = createAsyncThunk(
+  'games/ticketsForAGameByDate',
+  async ({ gameId, year, month, day }, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`http://localhost:5000/api/games/${gameId}`);
+    } catch {}
+  }
+); */
+
 export const gameSlice = createSlice({
   name: 'games',
   initialState,
@@ -168,6 +210,28 @@ export const gameSlice = createSlice({
       })
       .addCase(deleteGame.rejected, (state) => {
         state.isLoading = false;
+      })
+      .addCase(ticketsForGamesByDate.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(ticketsForGamesByDate.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.tickets = action.payload.data;
+      })
+      .addCase(ticketsForGamesByDate.rejected, (state) => {
+        state.isLoading = false;
+        state.tickets = null;
+      })
+      .addCase(gameWithMoreTicketsToday.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(gameWithMoreTicketsToday.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.moreTicketsTodayGame = action.payload.data;
+      })
+      .addCase(gameWithMoreTicketsToday.rejected, (state) => {
+        state.isLoading = false;
+        state.moreTicketsTodayGame = null;
       });
   },
 });
