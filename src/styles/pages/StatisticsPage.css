@@ -1,7 +1,10 @@
 .container{
-    width: 100%;
-    height: 100vw;
-    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: calc(100vw - 250px);
+    height: 100%;
+    padding: 1rem;
 }
 
 /* .stats-container{
@@ -16,17 +19,21 @@
     height: 80%;
 } */
 
+.container h1{
+    text-align: center;
+}
+
 .stats-container{
     width: 100%;
-    height: 80%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
 
 }
 
 .stats-container .row-container{
     width: 100%;
-    height: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,27 +49,34 @@
     
 }
 
-.column-container h3{
-    text-align: center;
+.column-container{
+    height: 700px;
 }
 
 .column-container form{
+    gap: 1rem;
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: normal;
     width: 100%;
-    height: 10%;
+    height: 30px;
     margin-bottom: 10px;
 }
 
 .column-container form button{
-    margin: 0 !important;
+    position: absolute;
+    right: 0;
+    margin: 0;
     width: 90px;
     border-radius: 5px;
+    align-self: flex-end;
 }
 
-.column-container form input{
+.column-container form input, .column-container form select{
+    padding: 2px 3px;
     width: 125px;
+    border-radius: 5px;
+    border: solid 1px #000;
 }
 
 .column-container form label{
@@ -71,8 +85,10 @@
 }
 
 .column-content{
+    font-size: 14px;
+    padding: 1rem;
     width: 100%;
-    height: 90%;
+    height: 150px;
     box-shadow: 0 1px 8px #0003;
     background-color: #fff;
     border-radius: 15px;

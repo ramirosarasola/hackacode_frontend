@@ -6,6 +6,7 @@ import { userSlice } from '../slices/userSlice';
 import { gameSlice } from '../slices/gameSlice';
 import { customerSlice } from '../slices/customerSlice';
 import { saleSlice } from "../slices/saleSlice";
+import {ticketSlice} from '../slices/ticketSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     games: gameSlice.reducer,
     customers: customerSlice.reducer,
     sales: saleSlice.reducer,
+    tickets: ticketSlice.reducer,
   },
 });

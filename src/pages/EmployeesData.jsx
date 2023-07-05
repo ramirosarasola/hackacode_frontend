@@ -10,6 +10,7 @@ const EmployeesData = () => {
   const dispatch = useDispatch();
   const { employees, loading, error } = useSelector(state => state.employees);
   const { users } = useSelector(state => state.users);
+  const { games } = useSelector((state) => state.games);
 
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const EmployeesData = () => {
   return (
     <section className='employees__data'>
       <h2>Lista de Empleados</h2>
-      <EnhancedTable employees={employees} users={users} />
+      <EnhancedTable employees={employees} users={users} games={games} />
     </section>
   );
 };

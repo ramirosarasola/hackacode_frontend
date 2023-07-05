@@ -6,6 +6,7 @@ const initialState = {
   tickets: [],
   loading: false,
   error: null,
+  ticketsByGame:null,
 }
 
 export const createTicket = createAsyncThunk(
@@ -58,6 +59,18 @@ export const getTicket = createAsyncThunk(
   }
 );
 
+export const getTicketsByGameAndDate = createAsyncThunk(
+  'tickets/getTicketsByGameAndDate',
+  async ({id , year, month, day }, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/games/${id}/tickets-by-game?year=${year}&month=${month}&day=${day}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const ticketSlice = createSlice({
   name: 'tickets',
   initialState,
@@ -86,6 +99,18 @@ export const ticketSlice = createSlice({
       .addCase(createTicket.rejected, (state) => {
         state.loading = false;
         state.tickets = [];
+      })
+      .addCase(getTicketsByGameAndDate.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getTicketsByGameAndDate.fulfilled, (state, action) => {
+        state.loading = false;
+        state.ticketsByGame = action.payload.data;
+      })
+      .addCase(getTicketsByGameAndDate.rejected, (state) => {
+        state.loading = false;
+        state.ticketsByGame = null;
+        
       })
   },
 });

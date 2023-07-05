@@ -7,6 +7,7 @@ const initialState = {
   loading: false,
   error: null,
   total: null,
+  totalInADate:null,
 };
 
 export const newSale = createAsyncThunk(
@@ -99,6 +100,20 @@ export const totalProfitInAMonth = createAsyncThunk(
   }
 );
 
+export const totalProfitInADate = createAsyncThunk(
+  'sales/totalProfitInADate',
+  async ({ month, year, day }, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/api/sales/total-sales-by-date?year=${year}&month=${month}&day=${day}`
+      );
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const saleSlice = createSlice({
   name: 'sales',
   initialState,
@@ -171,6 +186,19 @@ export const saleSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
         state.total = null;
+      })
+      .addCase(totalProfitInADate.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(totalProfitInADate.fulfilled, (state, action) => {
+        state.loading = false;
+        state.totalInADate = action.payload.total;
+      })
+      .addCase(totalProfitInADate.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.totalInADate = null;
       });
   },
 });
