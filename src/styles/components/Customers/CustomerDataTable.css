@@ -1,4 +1,5 @@
-.customers__data--table {
+.customers__data--table,
+.tickets_data--table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import TicketsTableData from './TicketsTableData';
 import { getTickets, deleteTicket, updateTicket } from '../../slices/ticketSlice';
 import '../../styles/pages/Tickets.css';
+import '../../styles/components/Customers/CustomerDataTable.css'
 
 const Tickets = () => {
   const tickets = useSelector((state) => state.tickets.tickets);
@@ -10,16 +11,15 @@ const Tickets = () => {
 
   const { user } = useSelector((state) => state.auth);
   const { employees } = useSelector((state) => state.employees);
-  console.log(employees);
-  console.log(user);
+  
+
 
   const employeeType = employees.find(
     (employee) => employee.user === user.data?._id
   )?.type;
 
   const userRole = user.data?.role;
-  console.log(employeeType);
-  console.log(userRole);
+
 
   useEffect(() => {
     dispatch(getTickets());
@@ -43,7 +43,7 @@ const Tickets = () => {
 
   return (
     <div className="tickets__container">
-      <h1>Tickets</h1>
+      <h1 style={{textAlign: "center"}}>Tickets</h1>
       <TicketsTableData
         tickets={tickets}
         onDeleteTicket={handleDeleteTicket}

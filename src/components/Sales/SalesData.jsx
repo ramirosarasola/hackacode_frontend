@@ -42,7 +42,7 @@ const SalesData = () => {
 
   return (
     <div className="sales__container">
-      <h1>Sales</h1>
+      <h1 style={{textAlign: "center"}}>Sales</h1>
       <SalesTableData
         sales={sales}
         onDeleteSale={handleDeleteSale}
