@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Alert } from '../components/UI/alert';
 import axios from 'axios';
 
@@ -6,7 +6,8 @@ const initialState = {
   customers: [],
   loading: false,
   error: null,
-}
+  customer: null,
+};
 
 export const registerCustomer = createAsyncThunk(
   'auth/registerCustomer',
@@ -23,10 +24,10 @@ export const registerCustomer = createAsyncThunk(
         body,
         config
       );
-      Alert("success", "Customer created succesfully")
+      Alert('success', 'Customer created succesfully');
       return response.data;
     } catch (error) {
-      Alert("error", "Sorry, try again")
+      Alert('error', 'Sorry, try again');
       return rejectWithValue(error.response.data);
     }
   }
@@ -49,7 +50,9 @@ export const getCustomer = createAsyncThunk(
   'customers/getCustomer',
   async ({ id }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/customers/${id}`);
+      const response = await axios.get(
+        `http://localhost:5000/api/customers/${id}`
+      );
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -57,13 +60,14 @@ export const getCustomer = createAsyncThunk(
   }
 );
 
-
-
 export const updateCustomer = createAsyncThunk(
   'customers/updateCustomer',
   async ({ id, customerData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/customers/${id}`, customerData);
+      const response = await axios.put(
+        `http://localhost:5000/api/customers/${id}`,
+        customerData
+      );
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -83,6 +87,19 @@ export const deleteCustomer = createAsyncThunk(
   }
 );
 
+export const customerWithMoreTickets = createAsyncThunk(
+  'customers/customerWithMoreTickets',
+  async ({ year, month }, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/api/customers/most-tickets?year=${year}&month=${month}`
+      );
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const customerSlice = createSlice({
   name: 'customers',
@@ -109,7 +126,9 @@ export const customerSlice = createSlice({
       .addCase(updateCustomer.fulfilled, (state, action) => {
         state.loading = false;
         const updatedCustomer = action.payload;
-        const index = state.customers.findIndex(customer => customer._id === updatedCustomer._id);
+        const index = state.customers.findIndex(
+          (customer) => customer._id === updatedCustomer._id
+        );
         if (index !== -1) {
           state.customers[index] = updatedCustomer;
         }
@@ -125,11 +144,27 @@ export const customerSlice = createSlice({
       .addCase(deleteCustomer.fulfilled, (state, action) => {
         state.loading = false;
         const deletedCustomerId = action.payload;
-        state.customers = state.customers.filter(customer => customer._id !== deletedCustomerId);
+        state.customers = state.customers.filter(
+          (customer) => customer._id !== deletedCustomerId
+        );
       })
       .addCase(deleteCustomer.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(customerWithMoreTickets.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(customerWithMoreTickets.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.customer = action.payload.data;
+      })
+      .addCase(customerWithMoreTickets.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.customer = null;
       });
   },
 });
