@@ -21,7 +21,7 @@ function Game({ game }) {
   console.log(employees);
   console.log(user);
 
-  const employeeType = employees.find(
+  const employeeType = employeesList.find(
     (employee) => employee.user === user.data?._id
   )?.type;
 
@@ -90,12 +90,19 @@ function Game({ game }) {
     <div className={`game_card ${!game.available && "disabled"}`}>
       <div className="game_heading">
         <div className="image_container">
-          <button className="delete_button" onClick={onDeleteHandler}>
+
+          {(userRole === "admin" || employeeType === "employee")
+            &&
+            <>
+            <button className="delete_button" onClick={onDeleteHandler}>
             <DeleteForeverIcon />
           </button>
           <button className="edit_button" onClick={onEditHandler}>
             <EditIcon />
-          </button>
+            </button>
+            </>
+          }
+
           <img src={`http://localhost:5000/uploads/${photo}`} alt="no photo" />
         </div>
         <div className="title">
@@ -110,12 +117,13 @@ function Game({ game }) {
           ))}
         </div>
 
-        {(userRole === "admin" || employeeType === "employee") && (
+        {(userRole === "admin" || employeeType === "employee")
+          &&
           <button onClick={toggleMenu}>
             See More
             <ExpandMoreIcon />
           </button>
-        )}
+        }
         <div className={`employees ${isDivOpen ? "show" : "hide"}`}>
           <p>Employees</p>
           {employees.map((employeeId, index) => (
