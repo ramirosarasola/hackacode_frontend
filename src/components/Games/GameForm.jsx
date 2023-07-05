@@ -32,8 +32,8 @@ function GameForm({ id }) {
         ...formData
       };
       console.log(gameData);
-      await dispatch(editGame(gameData)).unwrap();
-      await dispatch(uploadPhoto({ id: id, file: photo })).unwrap();
+      const editedGame = await dispatch(editGame(gameData)).unwrap();
+      await dispatch(uploadPhoto({ id: editedGame._id, file: photo })).unwrap();
       Alert('success', 'Game updated successfully');
     } catch (error) {
       Alert('error', 'Something went wrong...');
