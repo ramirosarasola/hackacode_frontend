@@ -21,7 +21,7 @@ export const loadUser = createAsyncThunk(
 
     try {
       // const res = await axios.get('http://localhost:5000/api/auth/me');
-      const res = await axios.get('http://149.50.128.34:5001/api/auth/me');
+      const res = await axios.get('https://149.50.128.34:5001/api/auth/me');
       // console.log(res.data);
       return res.data;
     } catch (error) {
@@ -41,7 +41,7 @@ export const registerUser = createAsyncThunk(
       };
       const body = JSON.stringify(newUser);
       const response = await axios.post(
-        'http://149.50.128.34:5001/api/auth/register',
+        'https://149.50.128.34:5001/api/auth/register',
         body,
         config
       );
@@ -66,7 +66,7 @@ export const loginUser = createAsyncThunk(
 
     try {
       const { data } = await axios.post(
-        'http://149.50.128.34:5001/api/auth/login',
+        'https://149.50.128.34:5001/api/auth/login',
         body,
         config
       );
