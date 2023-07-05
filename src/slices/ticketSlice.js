@@ -10,14 +10,14 @@ const initialState = {
 
 export const createTicket = createAsyncThunk(
   'tickets/createTicket',
-  async ({customerId, gameId}, { rejectWithValue }) => {
+  async ({customerId, gameId, dueDate}, { rejectWithValue }) => {
     try {
       const config = {
         headers: {
           'Content-Type': 'application/json',
         },
       };
-      const body = JSON.stringify({ customerId, gameId });
+      const body = JSON.stringify({ customerId, gameId, dueDate });
       const response = await axios.post(
         'http://localhost:5000/api/tickets/create',
         body,

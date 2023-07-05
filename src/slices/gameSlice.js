@@ -94,6 +94,22 @@ export const deleteGame = createAsyncThunk(
   }
 );
 
+export const editGame = createAsyncThunk(
+  'games/editGame',
+  async (game, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/games/${game.id}`,
+        game
+      );
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
 export const gameSlice = createSlice({
   name: 'games',
   initialState,
@@ -167,6 +183,20 @@ export const gameSlice = createSlice({
         state.games = state.games.filter((game) => game._id !== action.payload);
       })
       .addCase(deleteGame.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(editGame.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editGame.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const editedGame = action.payload;
+        const index = state.games.findIndex((game) => game._id === editedGame._id);
+        if (index !== -1) {
+          state.games[index] = editedGame;
+        }
+      })
+      .addCase(editGame.rejected, (state) => {
         state.isLoading = false;
       });
   },

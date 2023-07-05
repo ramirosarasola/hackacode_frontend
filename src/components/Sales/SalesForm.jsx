@@ -21,7 +21,8 @@ const SalesForm = () => {
   const ticket = {
     customerId: "",
     gameId: "",
-    ticketAmount:1
+    dueDate: "",
+    ticketAmount: 1,
   };
 
   const [formData, setFormData] = useState([ticket]);
@@ -38,7 +39,7 @@ const SalesForm = () => {
     e.preventDefault();
 
     if (!formData[0].customerId) {
-      Alert("warning","Please select a customer before entering a game");
+      Alert("warning", "Please select a customer before entering a game");
       return;
     }
 
@@ -49,6 +50,7 @@ const SalesForm = () => {
           createTicket({
             customerId: item.customerId,
             gameId: item.gameId,
+            dueDate: item.dueDate,
           })
         );
         tickets.push(createTicketPromise);
@@ -58,10 +60,10 @@ const SalesForm = () => {
 
     try {
       const createdTickets = await Promise.all(ticketsToSale);
-      const tickets = createdTickets.map((ticket) => ticket.payload.data._id);
+      const tickets = createdTickets.map((ticket) => ticket.payload.data);
 
       console.log(tickets);
-      dispatch(newSale({tickets}))
+      dispatch(newSale({ tickets }));
       setFormData([ticket]);
     } catch (error) {
       console.error("Error creating tickets:", error);
@@ -88,13 +90,13 @@ const SalesForm = () => {
   };
 
   const NewSaleForm = ({ index }) => {
-    const { customerId, gameId, ticketAmount } = formData[index] || [];
+    const { customerId, gameId, ticketAmount, dueDate } = formData[index] || [];
     const [selectedGame, setSelectedGame] = useState(null);
-  
+
     const handleGameChange = (e) => {
       const { value } = e.target;
       const selectedGame = games.find((game) => game._id === value);
-  
+
       const updatedFormData = [...formData];
       updatedFormData[index] = {
         ...updatedFormData[index],
@@ -102,10 +104,21 @@ const SalesForm = () => {
         gameId: value,
       };
       setFormData(updatedFormData);
-  
       setSelectedGame(selectedGame);
     };
-  
+
+    const handleDateChange = (e) => {
+      const { value } = e.target;
+      const dateValue = value;
+
+      const updatedFormData = [...formData];
+      updatedFormData[index] = {
+        ...updatedFormData[index],
+        dueDate: dateValue,
+      };
+      setFormData(updatedFormData);
+    };
+
     const handleTicketAmountChange = (e) => {
       const { value } = e.target;
       const updatedFormData = [...formData];
@@ -115,7 +128,7 @@ const SalesForm = () => {
       };
       setFormData(updatedFormData);
     };
-  
+
     useEffect(() => {
       if (selectedGame) {
         const totalPrice = selectedGame.price * ticketAmount;
@@ -127,10 +140,10 @@ const SalesForm = () => {
         setFormData(updatedFormData);
       }
     }, [selectedGame, ticketAmount]);
-  
+
     const isCustomerSelected = !!formData[0]?.customerId;
     const isGameDisabled = !isCustomerSelected;
-  
+
     return (
       <div className="sale-data-inputs">
         <label className="sale-data-label">
@@ -149,6 +162,53 @@ const SalesForm = () => {
             ))}
           </select>
         </label>
+        <label className="sale-data-label">
+          Date
+          <select
+            name="dueDate"
+            value={dueDate}
+            onChange={handleDateChange}
+            disabled={isGameDisabled}
+          >
+            <option value="">Select a Date</option>
+            {games.find((game) => game._id === formData[index]?.gameId)
+  ?.hours?.map((hour, i) => {
+    const availableHours = [];
+    const openingHour = new Date(hour?.opening);
+    const closingHour = new Date(hour?.closing);
+    let currentTime = openingHour;
+    while (currentTime < closingHour) {
+      // Obtener la representación en GMT-3 (Argentina)
+      const formattedDisplay = currentTime.toLocaleString("en-US", {
+        timeZone: "America/Argentina/Buenos_Aires",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      });
+      const formattedValue = currentTime.toISOString();
+      availableHours.push({
+        display: formattedDisplay,
+        value: formattedValue,
+      });
+      currentTime.setHours(currentTime.getHours() + 1);
+    }
+
+    return (
+      <React.Fragment key={i}>
+        {availableHours.map((time) => (
+          <option key={time.value} value={time.value}>
+            {time.display}
+          </option>
+        ))}
+      </React.Fragment>
+    );
+  })}
+
+          </select>
+        </label>
+
         <label>
           Amount of tickets
           <input
@@ -160,7 +220,7 @@ const SalesForm = () => {
             disabled={isGameDisabled}
           />
         </label>
-        
+
         <label>
           Total
           <input
@@ -168,13 +228,15 @@ const SalesForm = () => {
             type="number"
             name="total"
             value={
-              formData[index]?.gameId
-                ? games.find((game) => game._id == formData[index].gameId).price *
-                  ticketAmount
+              formData[index]?.gameId &&
+              games.find((game) => game?._id === formData[index]?.gameId)
+                ? games.find((game) => game?._id === formData[index]?.gameId)
+                    .price * ticketAmount
                 : 0
             }
           />
         </label>
+
         <button className="addSale" onClick={handleAddGame}>
           +
         </button>
@@ -202,7 +264,6 @@ const SalesForm = () => {
             onChange={(e) => onChange(e, 0)}
           >
             <option value="">Select a customer</option>
-            {/* Iterate over customers and create an option for each */}
             {customers.map((customer, i) => (
               <option key={i} value={customer._id}>
                 {customer.name} {customer.lastName}
