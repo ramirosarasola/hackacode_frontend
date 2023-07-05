@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { Alert } from '../components/UI/alert';
+import { Alert, ConfirmAlert } from '../components/UI/alert';
 import axios from 'axios';
 
 const initialState = {
@@ -24,7 +24,7 @@ export const registerCustomer = createAsyncThunk(
         body,
         config
       );
-      Alert('success', 'Customer created succesfully');
+      Alert('success', 'Customer created successfully');
       return response.data;
     } catch (error) {
       Alert('error', 'Sorry, try again');
@@ -38,7 +38,6 @@ export const fetchCustomers = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get('http://localhost:5000/api/customers');
-      // console.log(response.data);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -68,8 +67,10 @@ export const updateCustomer = createAsyncThunk(
         `http://localhost:5000/api/customers/${id}`,
         customerData
       );
+      Alert('success', 'Customer updated successfully');
       return response.data.data;
     } catch (error) {
+      Alert('error', 'Sorry, try again');
       return rejectWithValue(error.response.data);
     }
   }
@@ -79,9 +80,21 @@ export const deleteCustomer = createAsyncThunk(
   'customers/deleteCustomer',
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:5000/api/customers/${id}`);
-      return id;
+      const confirmDelete = await ConfirmAlert(
+        'Delete Customer',
+        'Are you sure you want to delete this customer?',
+        'Delete',
+        'Cancel'
+      );
+      if (confirmDelete) {
+        await axios.delete(`http://localhost:5000/api/customers/${id}`);
+        Alert('success', 'Customer deleted successfully');
+        return id;
+      } else {
+        return rejectWithValue('Cancelled');
+      }
     } catch (error) {
+      Alert('error', 'Sorry, try again');
       return rejectWithValue(error.response.data);
     }
   }
