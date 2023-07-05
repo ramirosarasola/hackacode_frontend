@@ -20,7 +20,7 @@ export const createTicket = createAsyncThunk(
       };
       const body = JSON.stringify({ customerId, gameId, dueDate });
       const response = await axios.post(
-        'http://localhost:5000/api/tickets/create',
+        'http://149.50.128.34:5001/api/tickets/create',
         body,
         config
       );
@@ -38,7 +38,7 @@ export const getTickets = createAsyncThunk(
   'tickets/getTickets',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:5000/api/tickets');
+      const response = await axios.get('http://149.50.128.34:5001/api/tickets');
       // console.log(response.data);
       return response.data.data;
     } catch (error) {
@@ -51,7 +51,7 @@ export const getTicket = createAsyncThunk(
   'tickets/getTicket',
   async ({ id }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/tickets/${id}`);
+      const response = await axios.get(`http://149.50.128.34:5001/api/tickets/${id}`);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -63,7 +63,7 @@ export const getTicketsByGameAndDate = createAsyncThunk(
   'tickets/getTicketsByGameAndDate',
   async ({id , year, month, day }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/games/${id}/tickets-by-game?year=${year}&month=${month}&day=${day}`);
+      const response = await axios.get(`http://149.50.128.34:5001/api/games/${id}/tickets-by-game?year=${year}&month=${month}&day=${day}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -82,7 +82,7 @@ export const deleteTicket = createAsyncThunk(
         'Cancel'
       );
       if (confirmDelete) {
-        await axios.delete(`http://localhost:5000/api/tickets/${id}`);
+        await axios.delete(`http://149.50.128.34:5001/api/tickets/${id}`);
         Alert('success', 'Ticket deleted successfully');
         return id;
       } else {
@@ -100,7 +100,7 @@ export const updateTicket = createAsyncThunk(
   async ({ id, ticketData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/tickets/${id}`,
+        `http://149.50.128.34:5001/api/tickets/${id}`,
         ticketData
       );
       Alert('success', 'Ticket updated successfully');

@@ -20,7 +20,7 @@ export const registerCustomer = createAsyncThunk(
       };
       const body = JSON.stringify(newCustomer);
       const response = await axios.post(
-        'http://localhost:5000/api/customers/register',
+        'http://149.50.128.34:5001/api/customers/register',
         body,
         config
       );
@@ -37,7 +37,7 @@ export const fetchCustomers = createAsyncThunk(
   'customers/fetchCustomers',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:5000/api/customers');
+      const response = await axios.get('http://149.50.128.34:5001/api/customers');
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -50,7 +50,7 @@ export const getCustomer = createAsyncThunk(
   async ({ id }, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/customers/${id}`
+        `http://149.50.128.34:5001/api/customers/${id}`
       );
       return response.data.data;
     } catch (error) {
@@ -64,7 +64,7 @@ export const updateCustomer = createAsyncThunk(
   async ({ id, customerData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/customers/${id}`,
+        `http://149.50.128.34:5001/api/customers/${id}`,
         customerData
       );
       Alert('success', 'Customer updated successfully');
@@ -87,7 +87,7 @@ export const deleteCustomer = createAsyncThunk(
         'Cancel'
       );
       if (confirmDelete) {
-        await axios.delete(`http://localhost:5000/api/customers/${id}`);
+        await axios.delete(`http://149.50.128.34:5001/api/customers/${id}`);
         Alert('success', 'Customer deleted successfully');
         return id;
       } else {
@@ -105,7 +105,7 @@ export const customerWithMoreTickets = createAsyncThunk(
   async ({ year, month }, { rejectWithValue }) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/customers/most-tickets?year=${year}&month=${month}`
+        `http://149.50.128.34:5001/api/customers/most-tickets?year=${year}&month=${month}`
       );
       return res.data;
     } catch (error) {

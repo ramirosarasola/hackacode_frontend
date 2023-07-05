@@ -21,7 +21,7 @@ export const newSale = createAsyncThunk(
       };
       const body = JSON.stringify(tickets);
       const response = await axios.post(
-        'http://localhost:5000/api/sales',
+        'http://149.50.128.34:5001/api/sales',
         body,
         config
       );
@@ -38,7 +38,7 @@ export const getSales = createAsyncThunk(
   'sales/getSales',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:5000/api/sales');
+      const response = await axios.get('http://149.50.128.34:5001/api/sales');
       console.log(response.data);
       return response.data.data;
     } catch (error) {
@@ -51,7 +51,7 @@ export const getSale = createAsyncThunk(
   'sales/getSale',
   async ({ id }, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/sales/${id}`);
+      const response = await axios.get(`http://149.50.128.34:5001/api/sales/${id}`);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -64,7 +64,7 @@ export const updateSale = createAsyncThunk(
   async ({ id, saleData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/sales/${id}`,
+        `http://149.50.128.34:5001/api/sales/${id}`,
         saleData
       );
       return response.data.data;
@@ -85,7 +85,7 @@ export const deleteSale = createAsyncThunk(
         'Cancel'
       );
       if (confirmDelete) {
-        await axios.delete(`http://localhost:5000/api/sales/${id}`);
+        await axios.delete(`http://149.50.128.34:5001/api/sales/${id}`);
         Alert('success', 'Sale deleted successfully');
         return id;
       } else {
@@ -103,7 +103,7 @@ export const totalProfitInAMonth = createAsyncThunk(
   async ({ month, year }, { rejectWithValue }) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/sales/total?year=${year}&month=${month}`
+        `http://149.50.128.34:5001/api/sales/total?year=${year}&month=${month}`
       );
       return res.data;
     } catch (error) {
@@ -117,7 +117,7 @@ export const totalProfitInADate = createAsyncThunk(
   async ({ month, year, day }, { rejectWithValue }) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/sales/total-sales-by-date?year=${year}&month=${month}&day=${day}`
+        `http://149.50.128.34:5001/api/sales/total-sales-by-date?year=${year}&month=${month}&day=${day}`
       );
       return res.data;
     } catch (error) {

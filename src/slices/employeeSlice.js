@@ -11,7 +11,7 @@ export const fetchEmployees = createAsyncThunk(
   'employees/fetchEmployees',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:5000/api/employees');
+      const response = await axios.get('http://149.50.128.34:5001/api/employees');
       // console.log(response.data);
       return response.data.data;
     } catch (error) {
@@ -24,7 +24,7 @@ export const getEmployee = createAsyncThunk(
   'employees/getEmployee',
   async ({id}, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/employees/${id}`);
+      const response = await axios.get(`http://149.50.128.34:5001/api/employees/${id}`);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -38,7 +38,7 @@ export const updateEmployee = createAsyncThunk(
   'employees/updateEmployee',
   async ({ id, employeeData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/employees/${id}`, employeeData);
+      const response = await axios.put(`http://149.50.128.34:5001/api/employees/${id}`, employeeData);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -50,7 +50,7 @@ export const deleteEmployee = createAsyncThunk(
   'employees/deleteEmployee',
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:5000/api/employees/${id}`);
+      await axios.delete(`http://149.50.128.34:5001/api/employees/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response.data);

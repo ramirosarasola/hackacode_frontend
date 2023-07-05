@@ -20,7 +20,7 @@ export const createGame = createAsyncThunk(
       };
       const body = JSON.stringify(game);
       const response = await axios.post(
-        'http://localhost:5000/api/games/register',
+        'http://149.50.128.34:5001/api/games/register',
         body,
         config
       );
@@ -39,7 +39,7 @@ export const uploadPhoto = createAsyncThunk(
       formData.append('file', file);
 
       const response = await axios.put(
-        `http://localhost:5000/api/games/${id}/photo`,
+        `http://149.50.128.34:5001/api/games/${id}/photo`,
         formData,
         {
           headers: {
@@ -63,7 +63,7 @@ export const getGames = createAsyncThunk(
   'games/getGames',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('http://localhost:5000/api/games');
+      const response = await axios.get('http://149.50.128.34:5001/api/games');
       console.log(response.data);
       return response.data.data;
     } catch (error) {
@@ -76,7 +76,7 @@ export const getGame = createAsyncThunk(
   'games/getGame',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/games/${id}`);
+      const response = await axios.get(`http://149.50.128.34:5001/api/games/${id}`);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -88,7 +88,7 @@ export const deleteGame = createAsyncThunk(
   'games/deleteGame',
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:5000/api/games/${id}`);
+      await axios.delete(`http://149.50.128.34:5001/api/games/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -101,7 +101,7 @@ export const editGame = createAsyncThunk(
   async (game, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/games/${game.id}`,
+        `http://149.50.128.34:5001/api/games/${game.id}`,
         game
       );
       return response.data.data;
@@ -118,7 +118,7 @@ export const ticketsForGamesByDate = createAsyncThunk(
   async ({ year, month, day }, { rejectWithValue }) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/games/tickets-sold-by-date?year=${year}&month=${month}&day=${day}`
+        `http://149.50.128.34:5001/api/games/tickets-sold-by-date?year=${year}&month=${month}&day=${day}`
       );
       return res.data;
     } catch (error) {
@@ -133,7 +133,7 @@ export const gameWithMoreTicketsToday = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await axios.get(
-        'http://localhost:5000/api/games/most-tickets'
+        'http://149.50.128.34:5001/api/games/most-tickets'
       );
       return res.data;
     } catch (error) {

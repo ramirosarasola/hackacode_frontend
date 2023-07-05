@@ -20,9 +20,9 @@ export const loadUser = createAsyncThunk(
     }
 
     try {
-      const res = await axios.get('http://localhost:5000/api/auth/me');
-      // const res = await axios.get('http://149.50.128.34:5001/api/auth/me');
-      // console.log(res.data);
+      // const res = await axios.get('http://localhost:5000/api/auth/me');
+      const res = await axios.get('http://149.50.128.34:5001/api/auth/me');
+      console.log(res.data);
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -40,16 +40,16 @@ export const registerUser = createAsyncThunk(
         },
       };
       const body = JSON.stringify(newUser);
-      // const response = await axios.post(
-      //   'http://149.50.128.34:5001/api/auth/register',
-      //   body,
-      //   config
-      // );
       const response = await axios.post(
-        'http://localhost:5000/api/auth/register',
+        'http://149.50.128.34:5001/api/auth/register',
         body,
         config
       );
+      // const response = await axios.post(
+      //   'http://localhost:5000/api/auth/register',
+      //   body,
+      //   config
+      // );
       dispatch(loadUser(newUser));
       return response.data;
     } catch (error) {
@@ -70,16 +70,16 @@ export const loginUser = createAsyncThunk(
     };
 
     try {
-      // const { data } = await axios.post(
-      //   'http://149.50.128.34:5001/api/auth/login',
-      //   body,
-      //   config
-      // );
       const { data } = await axios.post(
-        'http://localhost:5000/api/auth/login',
+        'http://149.50.128.34:5001/api/auth/login',
         body,
         config
       );
+      // const { data } = await axios.post(
+      //   'http://localhost:5000/api/auth/login',
+      //   body,
+      //   config
+      // );
       localStorage.setItem('token', data.token);
 
       // I set the token before the loadUser method executes.
