@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-const TicketsTableData = ({ tickets, onDeleteTicket, onUpdateTicket }) => {
+const TicketsTableData = ({ tickets, onDeleteTicket, onUpdateTicket, userRole, employeeType }) => {
   const [editedFields, setEditedFields] = useState({});
 
   const handleDataClick = (index, field, value) => {
@@ -34,7 +34,9 @@ const TicketsTableData = ({ tickets, onDeleteTicket, onUpdateTicket }) => {
           <th>ID</th>
           <th>Customer</th>
           <th>Game</th>
-          <th style={{ textAlign: 'center' }}>Actions</th>
+          { (userRole === "admin" || employeeType === "employee") 
+            &&
+            <th style={{ textAlign: 'center' }}>Actions</th>}
         </tr>
       </thead>
       <tbody className='data--table--body'>
@@ -43,7 +45,10 @@ const TicketsTableData = ({ tickets, onDeleteTicket, onUpdateTicket }) => {
             <td>{ticket._id}</td>
             <td>{ticket.customer}</td>
             <td>{ticket.game}</td>
-            <td className='data--table--button' style={{ textAlign: 'center' }}>
+            {(userRole === "admin" || employeeType === "employee") 
+              
+              &&
+              <td className='data--table--button' style={{ textAlign: 'center' }}>
               {Object.keys(editedFields).some((key) => key.startsWith(`${index}-`)) ? (
                 <button onClick={() => handleInputBlur(index, 'customer')}>Save</button>
               ) : (
@@ -56,7 +61,7 @@ const TicketsTableData = ({ tickets, onDeleteTicket, onUpdateTicket }) => {
                   </button>
                 </>
               )}
-            </td>
+            </td>}
           </tr>
         ))}
       </tbody>

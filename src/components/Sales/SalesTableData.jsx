@@ -47,7 +47,7 @@ const SalesTableData = ({
           <th>ID</th>
           <th>Amount of Tickets</th>
           <th>Total</th>
-          {(userRole === "admin" || employeeType === "manager") && (
+          {(userRole === "admin" || employeeType === "employee") && (
             <th style={{ textAlign: "center" }}>Actions</th>
           )}
         </tr>
@@ -70,7 +70,7 @@ const SalesTableData = ({
                 sale.total
               )}
             </td>
-            {(userRole === "admin" || employeeType === "manager") && (
+            {(userRole === "admin" || employeeType === "employee") && (
               <td
                 className="data--table--button"
                 style={{ textAlign: "center" }}

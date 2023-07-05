@@ -8,6 +8,19 @@ const Tickets = () => {
   const tickets = useSelector((state) => state.tickets.tickets);
   const dispatch = useDispatch();
 
+  const { user } = useSelector((state) => state.auth);
+  const { employees } = useSelector((state) => state.employees);
+  console.log(employees);
+  console.log(user);
+
+  const employeeType = employees.find(
+    (employee) => employee.user === user.data?._id
+  )?.type;
+
+  const userRole = user.data?.role;
+  console.log(employeeType);
+  console.log(userRole);
+
   useEffect(() => {
     dispatch(getTickets());
   }, [dispatch]);
@@ -35,6 +48,8 @@ const Tickets = () => {
         tickets={tickets}
         onDeleteTicket={handleDeleteTicket}
         onUpdateTicket={handleUpdateTicket}
+        userRole={userRole}
+        employeeType={employeeType}
       />
       {/* <button onClick={handleCreateTicket}>Create Ticket</button> */}
     </div>
