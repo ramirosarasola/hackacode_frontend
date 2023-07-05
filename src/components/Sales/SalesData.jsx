@@ -7,6 +7,18 @@ import '../../styles/pages/Sales.css';
 const SalesData = () => {
   const dispatch = useDispatch();
   const { sales } = useSelector((state) => state.sales);
+  const { user } = useSelector((state) => state.auth);
+  const { employees } = useSelector((state) => state.employees);
+  console.log(employees);
+  console.log(user);
+
+  const employeeType = employees.find(
+    (employee) => employee.user === user.data?._id
+  )?.type;
+
+  const userRole = user.data?.role;
+  console.log(employeeType);
+  console.log(userRole);
 
   useEffect(() => {
     dispatch(getSales());
@@ -35,6 +47,8 @@ const SalesData = () => {
         sales={sales}
         onDeleteSale={handleDeleteSale}
         onUpdateSale={handleUpdateSale}
+        userRole={userRole}
+        employeeType={employeeType}
       />
     </div>
   );

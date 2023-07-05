@@ -7,6 +7,18 @@ import '../../styles/pages/CustomerData.css';
 const CustomersData = () => {
   const dispatch = useDispatch();
   const { customers } = useSelector((state) => state.customers);
+  const { user } = useSelector((state) => state.auth);
+  const { employees } = useSelector((state) => state.employees);
+  console.log(employees);
+  console.log(user);
+
+  const employeeType = employees.find(
+    (employee) => employee.user === user.data?._id
+  )?.type;
+
+  const userRole = user.data?.role;
+  console.log(employeeType);
+  console.log(userRole);
 
   useEffect(() => {
     dispatch(fetchCustomers());
@@ -35,6 +47,8 @@ const CustomersData = () => {
         customers={customers}
         onDeleteCustomer={handleDeleteCustomer}
         onUpdateCustomer={handleUpdateCustomer}
+        userRole={userRole}
+        employeeType={employeeType}
       />
     </div>
   );

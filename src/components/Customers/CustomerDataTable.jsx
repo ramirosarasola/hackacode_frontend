@@ -3,7 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 // import '../../styles/pages/CustomerData.css';
 
-const CustomerTableData = ({ customers, onDeleteCustomer, onUpdateCustomer }) => {
+const CustomerTableData = ({ customers, onDeleteCustomer, onUpdateCustomer, userRole, employeeType }) => {
   const [editedFields, setEditedFields] = useState({});
 
   const handleDataClick = (index, field, value) => {
@@ -36,7 +36,10 @@ const CustomerTableData = ({ customers, onDeleteCustomer, onUpdateCustomer }) =>
           <th>Lastname</th>
           <th>DNI</th>
           <th>Email</th>
-          <th style={{ textAlign: 'center' }}>Actions</th>
+          {
+            (userRole === "admin" || employeeType === "manager")
+            &&
+            <th style={{ textAlign: 'center' }}>Actions</th>}
         </tr>
       </thead>
       <tbody className='data--table--body'>
@@ -90,20 +93,24 @@ const CustomerTableData = ({ customers, onDeleteCustomer, onUpdateCustomer }) =>
                 customer.email
               )}
             </td>
-            <td className='data--table--button' style={{ textAlign: 'center' }}>
+            {
+              (userRole === "admin" || employeeType === "manager")
+              &&
+              <td className='data--table--button' style={{ textAlign: 'center' }}>
               {editedFields[`${index}-name`] !== undefined ? (
                 <button onClick={() => handleInputBlur(index, 'name')}>Save</button>
               ) : (
-                <>
+                  
+                  <>
                   <button onClick={() => handleDataClick(index, 'name', customer.name)}>
                     <EditIcon />
                   </button>
                   <button onClick={() => handleDeleteClick(index)}>
                     <DeleteIcon />
                   </button>
-                </>
+                  </>
               )}
-            </td>
+            </td>}
           </tr>
         ))}
       </tbody>
