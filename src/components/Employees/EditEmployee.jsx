@@ -108,8 +108,6 @@ const EditForm = () => {
         email,
         password,
       };
-      console.log(updatedEmployee);
-      console.log(updateUser);
       // Alert("success", "Employee updated!");
 
       ConfirmAlert('Are you sure?',`Final results: Name: ${name} \n Lastname: ${lastName} \n Email: ${email}`, 'Yes, update it', 'No, go back').then((result) => {

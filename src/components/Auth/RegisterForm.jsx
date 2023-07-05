@@ -77,7 +77,6 @@ const RegisterForm = () => {
         password: formData.password
       };
       dispatch(registerUser(newUser));
-      console.log(newUser);
     }
   };
 

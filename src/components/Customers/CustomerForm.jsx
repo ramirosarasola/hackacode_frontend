@@ -33,8 +33,7 @@ const CustomerForm = () => {
     }
     dispatch(registerCustomer(newCustomer));
     setFormData(initialState);
-    // console.log(formData);
-    // console.log(newCustomer);
+
   };
 
   return (
